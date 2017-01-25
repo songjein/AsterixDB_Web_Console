@@ -22,7 +22,10 @@ app.use('/node_modules', express.static(__dirname + '/node_modules'));
 app.use('/', index);
 
 
-// catch 404 and forward to error handler
+/**
+* if there's no page... 
+* go to root addr
+*/
 app.use(function(req, res, next) {
   //var err = new Error('Not Found');
   //err.status = 404;
