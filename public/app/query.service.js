@@ -11,6 +11,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var core_1 = require('@angular/core');
 var http_1 = require('@angular/http');
 require('rxjs/add/operator/toPromise');
+//import 'rxjs/add/operator/map';
 //import { Hero } from './hero';
 var QueryService = (function () {
     function QueryService(http) {

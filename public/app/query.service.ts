@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Headers, Http } from '@angular/http';
 
 import 'rxjs/add/operator/toPromise';
+//import 'rxjs/add/operator/map';
 
 //import { Hero } from './hero';
 
@@ -11,7 +12,7 @@ export class QueryService {
 
 	constructor (private http: Http) { }
 
-	getAQL(query: string): Promise<string> {
+	getAQL(query: string): Promise<any> {
 		const apiUrl = '/query_aql?query='; 
 
 		return this.http.get(apiUrl + query)

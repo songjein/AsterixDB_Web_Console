@@ -4,6 +4,8 @@ import { PanelMenuModule,MenuItem } from 'primeng/primeng';
 
 import { QueryService } from './query.service';
 
+import { Globals } from './globals';
+
 @Component({
 	moduleId: module.id,
 	selector: 'sidebar',
@@ -15,6 +17,7 @@ export class SidebarComponent implements OnInit {
 	items: MenuItem[] = [];
 	
 	constructor(
+		private globals: Globals,
 		private queryService: QueryService	
 	){}
 	
@@ -24,9 +27,18 @@ export class SidebarComponent implements OnInit {
 			.then(result => {
 				for (var i = 0; i < result.length; i++){
 					this.items.push(
-						{ label: result[i]["DataverseName"], icon: '', items: [] }
+						{ 
+							label: result[i]["DataverseName"], 
+							icon: '', 
+							items: [],
+							command: (e) => {
+								this.globals.selectedDataverse = e.item.label	
+							}
+						}
 					);
 				}
+
+				this.getDataset(); 
 			});
 	}
 
@@ -41,15 +53,21 @@ export class SidebarComponent implements OnInit {
 					const idx = this.items.findIndex(x => x["label"] == dvName);
 
 					this.items[idx]["items"].push(
-						{ label: dsName, icon: '' }
+						{ 
+							label: dsName, 
+							icon: '', 
+							command: (e) => {
+								this.globals.selectedDataset = e.item.label	
+							}
+						}
 					);
 				}
+
 			});
 	}
 
 	ngOnInit(): void {
 		this.getDataverse();
-		this.getDataset(); // sync...
 	}
 
 }

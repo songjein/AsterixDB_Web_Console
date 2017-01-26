@@ -6,6 +6,8 @@ import { RouterModule } from '@angular/router';
 
 import { PanelMenuModule,MenuItem } from 'primeng/primeng';
 
+import { Globals }  from './globals';
+
 import { AppComponent }  from './app.component';
 import { NavbarComponent }  from './navbar.component';
 import { SidebarComponent }  from './sidebar.component';
@@ -34,7 +36,8 @@ import { AppRoutingModule } from './app-routing.module';
 	* a singleton QueryService instance
 	*/
 	providers: [
-		QueryService	
+		QueryService,
+		Globals
 	],
 	
   bootstrap: [ AppComponent ]

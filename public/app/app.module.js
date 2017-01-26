@@ -14,6 +14,7 @@ var forms_1 = require('@angular/forms');
 var http_1 = require('@angular/http');
 var router_1 = require('@angular/router');
 var primeng_1 = require('primeng/primeng');
+var globals_1 = require('./globals');
 var app_component_1 = require('./app.component');
 var navbar_component_1 = require('./navbar.component');
 var sidebar_component_1 = require('./sidebar.component');
@@ -41,7 +42,8 @@ var AppModule = (function () {
             * a singleton QueryService instance
             */
             providers: [
-                query_service_1.QueryService
+                query_service_1.QueryService,
+                globals_1.Globals
             ],
             bootstrap: [app_component_1.AppComponent]
         }), 
