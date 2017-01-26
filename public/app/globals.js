@@ -11,6 +11,7 @@ var Globals = (function () {
     function Globals() {
         this.selectedDataverse = "";
         this.selectedDataset = "";
+        this.isTableDrawed = false;
     }
     return Globals;
 }());

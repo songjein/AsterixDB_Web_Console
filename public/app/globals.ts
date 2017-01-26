@@ -11,4 +11,5 @@ Injectable()
 export class Globals{
 	selectedDataverse = "";
 	selectedDataset = "";
+	isTableDrawed = false;
 }

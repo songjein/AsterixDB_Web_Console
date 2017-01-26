@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
-import { DataTableModule, SharedModule } from 'primeng/primeng';
-
+import { DataTableModule, SharedModule } from 'primeng/primeng'; 
 import { QueryService } from './query.service';
 
 import { Globals } from './globals';
@@ -10,10 +9,12 @@ import { Globals } from './globals';
 	moduleId: module.id,
 	selector: 'browse-tab',
 	template: `
-		<p-dataTable [value]="data" [rows]="10" [paginator]="true" [pageLinks]="3" [responsive]="true" >
-			<p-column *ngFor="let col of cols" 
-							[field]="col.field" [header]="col.header"></p-column>
-		</p-dataTable>
+		<div style="width:80%; overflow-y:auto; padding: 10px; ">
+			<p-dataTable [value]="data" [rows]="10" [paginator]="true" [pageLinks]="3" [responsive]="true" >
+				<p-column *ngFor="let col of cols" 
+								[field]="col.field" [header]="col.header"></p-column>
+			</p-dataTable>
+		</div>
 	`,
 	styles: [`
 		p-dataTable{ 
@@ -33,10 +34,10 @@ export class BrowseComponent implements OnInit {
 
 	
 	browse(): void {
+		this.cols = [];
+
 		const dvName = this.globals.selectedDataverse;
 		const dsName = this.globals.selectedDataset;
-
-		console.log(dvName, dsName);
 
 		this.queryService
 			.getAQL(
@@ -59,6 +60,10 @@ export class BrowseComponent implements OnInit {
 	}
 
 	ngOnInit(): void {
-		this.browse();
+		setInterval(() => {
+			if (this.globals.isTableDrawed) return;
+			this.browse();
+			this.globals.isTableDrawed = true;
+		}, 100);
 	}
 }

@@ -1,11 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-
 import { Router } from '@angular/router';
 
 import { PanelMenuModule,MenuItem } from 'primeng/primeng';
 
-import { QueryService } from './query.service';
-
+import { QueryService } from './query.service'; 
 import { Globals } from './globals';
 
 @Component({
@@ -66,6 +64,7 @@ export class SidebarComponent implements OnInit {
 							icon: '', 
 							command: (e) => {
 								this.globals.selectedDataset = e.item.label;
+								this.globals.isTableDrawed = false; 
 								this.router.navigate(['/browse']);
 							}
 						}
