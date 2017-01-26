@@ -1,0 +1,14 @@
+<p-dataTable [value]="data" expandableRows="true" [rows]="10" [paginator]="true" [pageLinks]="    3" [responsive]="true" >
+	<p-column expander="true" [style]="{ width: '30px'}"  styleClass="col-icon"></p-column>
+	<p-column *ngFor="let col of cols" 
+		[field]="col.field" [header]="col.header"></p-column>
+	
+	<template let-d pTemplate="rowexpansion">
+		<div class="ui-grid ui-grid-responsive ui-fluid" style="font-size:16px; padding: 20px">
+			<div class="ui-grid-row">
+				{{d}}
+			</div>
+		</div>
+	</template>
+</p-dataTable>
+

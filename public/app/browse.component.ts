@@ -8,12 +8,7 @@ import { Globals } from './globals';
 @Component({
 	moduleId: module.id,
 	selector: 'browse-tab',
-	template: `
-		<p-dataTable [value]="data" [rows]="10" [paginator]="true" [pageLinks]="3" [responsive]="true" >
-			<p-column *ngFor="let col of cols" 
-							[field]="col.field" [header]="col.header"></p-column>
-		</p-dataTable>
-	`,
+	templateUrl: 'browse.component.html',
 	styles: [`
 	`]
 })
@@ -22,6 +17,8 @@ export class BrowseComponent implements OnInit, OnDestroy {
 	private intervalId: any;
 	data: any[];
 	cols: any[] = [];
+
+	selectedRow: any;
 
 	constructor(
 		private globals: Globals,
@@ -53,6 +50,10 @@ export class BrowseComponent implements OnInit, OnDestroy {
 					);
 				}
 			});
+	}
+
+	showDataInRow(d: any) {
+		this.selectedRow = d;
 	}
 
 	ngOnInit(): void {
