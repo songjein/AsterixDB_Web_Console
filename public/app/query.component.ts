@@ -10,16 +10,31 @@ import { Globals } from './globals';
 	template: `
 		<div style="width:80%; overflow-y:auto; padding: 10px; ">
 			<form>
+				<strong>mode : </strong>
 				<input type="radio" name="mode" value="SQL++" disabled>SQL++,  
 				<input type="radio" name="mode" value="AQL" checked>AQL<br>
 			</form>
+
+			<div style="height:10px;"></div>
+
+			<textarea [(ngModel)]="query">
+			</textarea>
+
+			<h3 style="color:red">ToDo.. (auto-complete, code-hilight)</h3>
+			<h1>Query Result</h1>
 		</div>
 	`,
 	styles: [`
+		textarea{
+			width: 600px;	
+			min-height: 300px;
+		}
 	`]
 })
 
 export class QueryComponent implements OnInit {
+
+	query: string; 
 
 	constructor(
 		private globals: Globals,
@@ -44,5 +59,20 @@ export class QueryComponent implements OnInit {
 	}
 
 	ngOnInit(): void {
+		this.query = `use dataverse ;
+
+for $d in dataset 
+where
+return $d
+		` 
+
+		if (this.globals.selectedDataverse) {
+this.query = `use dataverse ${this.globals.selectedDataverse};	
+
+for $d in dataset ${this.globals.selectedDataset} ;
+where 
+return $d
+`;
+		}
 	}
 }
