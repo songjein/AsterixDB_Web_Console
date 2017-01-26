@@ -1,13 +1,13 @@
 import { Component } from '@angular/core';
 
 @Component({
-	moduleId: module.id,
-	selector: 'test-app',
-	templateUrl: 'test.html'
+	selector: 'query-console',
+	template: `
+		<navbar></navbar>
+		<sidebar></sidebar>
+	` 
 })
 
 export class AppComponent {
-	test = "test";
-	
-	constructor(){}
+
 }

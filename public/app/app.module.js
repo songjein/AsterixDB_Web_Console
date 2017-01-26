@@ -11,7 +11,12 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var core_1 = require('@angular/core');
 var platform_browser_1 = require('@angular/platform-browser');
 var forms_1 = require('@angular/forms');
+var http_1 = require('@angular/http');
 var app_component_1 = require('./app.component');
+var navbar_component_1 = require('./navbar.component');
+var sidebar_component_1 = require('./sidebar.component');
+var query_service_1 = require('./query.service');
+var app_routing_module_1 = require('./app-routing.module');
 var AppModule = (function () {
     function AppModule() {
     }
@@ -20,9 +25,19 @@ var AppModule = (function () {
             imports: [
                 platform_browser_1.BrowserModule,
                 forms_1.FormsModule,
+                http_1.HttpModule,
+                app_routing_module_1.AppRoutingModule
             ],
             declarations: [
                 app_component_1.AppComponent,
+                navbar_component_1.NavbarComponent,
+                sidebar_component_1.SidebarComponent
+            ],
+            /**
+            * a singleton QueryService instance
+            */
+            providers: [
+                query_service_1.QueryService
             ],
             bootstrap: [app_component_1.AppComponent]
         }), 

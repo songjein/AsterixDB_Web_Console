@@ -15,7 +15,7 @@ router.get('/', function(req, res, next) {
 * query proxy
 * for the CROS problem at javascript
 */
-router.post('/query_aql', (req, res, next) => {	
+router.get('/query_aql', (req, res, next) => {	
 	// this addr will be replaced with 'localhost'
 	var host = 'http://sclab.gachon.ac.kr:19002';
 	var path = '/query?query=';
