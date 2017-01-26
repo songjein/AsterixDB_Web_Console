@@ -48,9 +48,7 @@ export class BrowseComponent implements OnInit {
 			)
 			.then(result => {
 				this.data = result;
-
 				const labels = Object.keys(result[0]);
-
 				for ( var i = 0; i < labels.length; i++ ) {
 					this.cols.push(
 						{ field: labels[i], header: labels[i] }
