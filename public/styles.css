@@ -1,0 +1,65 @@
+html{
+	font-family:sans-serif;
+	-ms-text-size-adjust:100%;
+	-webkit-text-size-adjust:100%
+}
+body {
+	font-family: "Roboto","Helvetica Neue Light","Helvetica Neue",Helvetica,Arial,"Lucida Grande",sans-serif;
+	font-size: 14px;
+	color: #546E7A;
+}
+article,aside,details,figcaption,figure,footer,header,hgroup,main,menu,nav,section,summary{
+	display:block
+}
+body, html {
+	height: 100%;
+	color: rgba(0,0,0,.87);
+	background: #fff;
+	position: relative;
+}
+.main-nav {
+	background: #DAD9FF;
+	height: 58px;
+	min-height: 58px;
+	padding: 0;
+	box-shadow: 0 2px 5px 0 rgba(0,0,0,0.24);
+}
+.l-offset-side-nav {
+	padding-left: 240px;
+}
+.l-offset-nav {
+	padding-top: 56px;
+}
+.l-layer-5 {
+	z-index: 5;
+}
+.l-pinned-top {
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+}
+.main-nav h1 .md-button, .main-nav h1 a {
+	background: url(../resources/images/asterixdb_tm.png) 16px 0px no-repeat;
+	background-size: 128px 36px;
+}
+.main-nav h1 .md-button, .main-nav h1 a {
+	background: url(../resources/images/asterixdb_tm.png) 16px 0px no-repeat;
+	background-size: 128px 36px;
+	border-radius: 0;
+	display: block;
+	height: 58px;
+	overflow: hidden;
+	text-indent: -3000px;
+	margin: 0;
+	padding: 0;
+}
+sup {
+	top: -0.5em;
+}
+sub, sup {
+	font-size: 75%;
+	line-height: 0;
+	position: relative;
+	vertical-align: baseline;
+}
