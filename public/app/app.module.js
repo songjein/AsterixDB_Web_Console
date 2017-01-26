@@ -19,6 +19,7 @@ var app_component_1 = require('./app.component');
 var navbar_component_1 = require('./navbar.component');
 var sidebar_component_1 = require('./sidebar.component');
 var tab_component_1 = require('./tab.component');
+var browse_component_1 = require('./browse.component');
 var query_service_1 = require('./query.service');
 var app_routing_module_1 = require('./app-routing.module');
 var AppModule = (function () {
@@ -34,12 +35,15 @@ var AppModule = (function () {
                 primeng_1.PanelMenuModule,
                 router_1.RouterModule.forRoot([]),
                 primeng_1.TabMenuModule,
+                primeng_1.DataTableModule,
+                primeng_1.SharedModule,
             ],
             declarations: [
                 app_component_1.AppComponent,
                 navbar_component_1.NavbarComponent,
                 sidebar_component_1.SidebarComponent,
                 tab_component_1.TabMenuComponent,
+                browse_component_1.BrowseComponent,
             ],
             /**
             * a singleton QueryService instance

@@ -10,8 +10,13 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 var core_1 = require('@angular/core');
 var router_1 = require('@angular/router');
-//import { DashboardComponent } from './dashboard.component';
-var routes = [];
+var browse_component_1 = require('./browse.component');
+var routes = [
+    //{ path: '', redirectTo: '/dashboard', pathMatch: 'full' },
+    //{ path: 'dashboard', component: DashboardComponent },
+    //{ path: 'detail/:id', component: HeroDetailComponent },
+    { path: 'browse', component: browse_component_1.BrowseComponent }
+];
 var AppRoutingModule = (function () {
     function AppRoutingModule() {
     }

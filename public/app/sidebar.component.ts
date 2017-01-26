@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
+import { Router } from '@angular/router';
+
 import { PanelMenuModule,MenuItem } from 'primeng/primeng';
 
 import { QueryService } from './query.service';
@@ -22,6 +24,7 @@ export class SidebarComponent implements OnInit {
 	
 	items: MenuItem[] = [];
 	constructor(
+		private router: Router,
 		private globals: Globals,
 		private queryService: QueryService	
 	){}
@@ -37,7 +40,7 @@ export class SidebarComponent implements OnInit {
 							icon: '', 
 							items: [],
 							command: (e) => {
-								this.globals.selectedDataverse = e.item.label	
+								this.globals.selectedDataverse = e.item.label;	
 							}
 						}
 					);
@@ -62,7 +65,8 @@ export class SidebarComponent implements OnInit {
 							label: dsName, 
 							icon: '', 
 							command: (e) => {
-								this.globals.selectedDataset = e.item.label	
+								this.globals.selectedDataset = e.item.label;
+								this.router.navigate(['/browse']);
 							}
 						}
 					);
