@@ -5,6 +5,7 @@ import { Component } from '@angular/core';
 	template: `
 		<navbar></navbar>
 		<sidebar></sidebar>
+		<tab-menu></tab-menu>
 	` 
 })
 

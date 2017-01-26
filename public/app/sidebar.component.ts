@@ -9,13 +9,16 @@ import { Globals } from './globals';
 @Component({
 	moduleId: module.id,
 	selector: 'sidebar',
-	templateUrl: 'sidebar.component.html'
+	templateUrl: 'sidebar.component.html',
+	styles:[`
+		p-panelMenu { float:left;		
+		}	
+	`]
 })
 
 export class SidebarComponent implements OnInit {
 	
 	items: MenuItem[] = [];
-	
 	constructor(
 		private globals: Globals,
 		private queryService: QueryService	

@@ -18,6 +18,7 @@ var globals_1 = require('./globals');
 var app_component_1 = require('./app.component');
 var navbar_component_1 = require('./navbar.component');
 var sidebar_component_1 = require('./sidebar.component');
+var tab_component_1 = require('./tab.component');
 var query_service_1 = require('./query.service');
 var app_routing_module_1 = require('./app-routing.module');
 var AppModule = (function () {
@@ -31,12 +32,14 @@ var AppModule = (function () {
                 http_1.HttpModule,
                 app_routing_module_1.AppRoutingModule,
                 primeng_1.PanelMenuModule,
-                router_1.RouterModule.forRoot([])
+                router_1.RouterModule.forRoot([]),
+                primeng_1.TabMenuModule,
             ],
             declarations: [
                 app_component_1.AppComponent,
                 navbar_component_1.NavbarComponent,
-                sidebar_component_1.SidebarComponent
+                sidebar_component_1.SidebarComponent,
+                tab_component_1.TabMenuComponent,
             ],
             /**
             * a singleton QueryService instance
