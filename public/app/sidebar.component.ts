@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
+import { PanelMenuModule,MenuItem } from 'primeng/primeng';
+
 import { QueryService } from './query.service';
 
 @Component({
@@ -9,21 +11,45 @@ import { QueryService } from './query.service';
 })
 
 export class SidebarComponent implements OnInit {
-
-	dataset: string;
-
+	
+	items: MenuItem[] = [];
+	
 	constructor(
 		private queryService: QueryService	
 	){}
 	
-	getQueryResult(): void {
+	getDataverse(): void {
+		this.queryService
+			.getAQL("for $ds in dataset Metadata.Dataverse return $ds;")
+			.then(result => {
+				for (var i = 0; i < result.length; i++){
+					this.items.push(
+						{ label: result[i]["DataverseName"], icon: '', items: [] }
+					);
+				}
+			});
+	}
+
+	getDataset(): void {
 		this.queryService
 			.getAQL("for $ds in dataset Metadata.Dataset return $ds;")
-			.then(result => this.dataset = result);
+			.then(result => {
+				for (var i = 0; i < result.length; i++){
+					const dvName = result[i]["DataverseName"];
+					const dsName = result[i]["DatasetName"];
+
+					const idx = this.items.findIndex(x => x["label"] == dvName);
+
+					this.items[idx]["items"].push(
+						{ label: dsName, icon: '' }
+					);
+				}
+			});
 	}
 
 	ngOnInit(): void {
-		this.getQueryResult();
+		this.getDataverse();
+		this.getDataset(); // sync...
 	}
 
 }

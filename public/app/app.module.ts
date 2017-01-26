@@ -2,6 +2,9 @@ import { NgModule }      from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
+import { RouterModule } from '@angular/router';
+
+import { PanelMenuModule,MenuItem } from 'primeng/primeng';
 
 import { AppComponent }  from './app.component';
 import { NavbarComponent }  from './navbar.component';
@@ -16,7 +19,9 @@ import { AppRoutingModule } from './app-routing.module';
 		BrowserModule, 
 		FormsModule,
 		HttpModule,
-		AppRoutingModule
+		AppRoutingModule,
+		PanelMenuModule,
+		RouterModule.forRoot([])
 	],
 
   declarations: [
