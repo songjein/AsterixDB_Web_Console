@@ -9,17 +9,12 @@ import { Globals } from './globals';
 	moduleId: module.id,
 	selector: 'browse-tab',
 	template: `
-		<div style="width:80%; overflow-y:auto; padding: 10px; ">
-			<p-dataTable [value]="data" [rows]="10" [paginator]="true" [pageLinks]="3" [responsive]="true" >
-				<p-column *ngFor="let col of cols" 
-								[field]="col.field" [header]="col.header"></p-column>
-			</p-dataTable>
-		</div>
+		<p-dataTable [value]="data" [rows]="10" [paginator]="true" [pageLinks]="3" [responsive]="true" >
+			<p-column *ngFor="let col of cols" 
+							[field]="col.field" [header]="col.header"></p-column>
+		</p-dataTable>
 	`,
 	styles: [`
-		p-dataTable{ 
-			float:left;		
-		}	
 	`]
 })
 

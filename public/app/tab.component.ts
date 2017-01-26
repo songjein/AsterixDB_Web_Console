@@ -12,9 +12,6 @@ import { TabMenuModule, MenuItem } from 'primeng/primeng';
 		<p-tabMenu [model]="items" [activeItem]="activeItem"></p-tabMenu>
 	`,
 	styles: [`
-		p-tabMenu{
-			float:left;		
-		}
 	`]
 })
 
