@@ -35,6 +35,13 @@ export class TabMenuComponent {
 				}
 			},
 			{ 
+				label: 'DataType', 
+				icon: 'fa-info-circle',
+				command: (e) => {
+					this.router.navigate(['/query']);
+				}
+			},
+			{ 
 				label: 'Query', 
 				icon: 'fa-terminal',
 				command: (e) => {
@@ -43,6 +50,6 @@ export class TabMenuComponent {
 			}
 		];
 
-		this.activeItem = this.items[0];
+		this.activeItem = this.items[2];
 	}
 }
