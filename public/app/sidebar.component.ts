@@ -11,7 +11,9 @@ import { Globals } from './globals';
 	selector: 'sidebar',
 	templateUrl: 'sidebar.component.html',
 	styles:[`
-		p-panelMenu { float:left;		
+		p-panelMenu { 
+			float:left;		
+			margin-top: 45px;
 		}	
 	`]
 })

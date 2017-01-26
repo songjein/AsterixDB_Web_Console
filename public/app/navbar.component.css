@@ -1,0 +1,21 @@
+nav{
+	position: fixed;
+	top: 0;
+	height: 50px;
+	padding: 5px;
+
+	background: #DAD9FF;
+	width: 100%;
+	box-shadow: 0 2px 5px 0 rgba(0,0,0,0.24);
+}
+
+nav img{
+	height: 35px;
+	margin-top: 5px;
+	margin-bottom: 0;
+}
+
+.current-location{
+	margin-left: 20px;
+	font-size: 15px;	
+}

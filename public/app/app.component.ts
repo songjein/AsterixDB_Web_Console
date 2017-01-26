@@ -6,7 +6,7 @@ import { Component } from '@angular/core';
 		<navbar></navbar>
 		<sidebar></sidebar>
 		<tab-menu></tab-menu>
-	` 
+	`
 })
 
 export class AppComponent {
