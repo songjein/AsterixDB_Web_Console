@@ -7,10 +7,10 @@ import { Globals } from './globals';
 	selector: 'navbar',
 	template: `
 		<nav>
-			<img src="/resources/images/asterixdb_tm.png">
+			<a href="/"><img src="/resources/images/asterixdb_tm.png"></a>
 			<strong  class="current-location">
 				{{globals.selectedDataverse}} 
-				<span *ngIf="globals.selectedDataset" style="color:red">/</span> 
+				<span *ngIf="globals.selectedDataset">/</span> 
 				{{globals.selectedDataset}}
 			</strong>
 		</nav>

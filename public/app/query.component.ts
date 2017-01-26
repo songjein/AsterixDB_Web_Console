@@ -20,7 +20,7 @@ import { Globals } from './globals';
 			<textarea [(ngModel)]="query">
 			</textarea>
 
-			<h3 style="color:red">ToDo.. (auto-complete, code-hilight)</h3>
+			<h3 style="color:red">ToDo.. (auto-complete, code-hilight, query-latency history)</h3>
 			<h1>Query Result</h1>
 		</div>
 	`,
