@@ -20,6 +20,7 @@ var navbar_component_1 = require('./navbar.component');
 var sidebar_component_1 = require('./sidebar.component');
 var tab_component_1 = require('./tab.component');
 var browse_component_1 = require('./browse.component');
+var query_component_1 = require('./query.component');
 var query_service_1 = require('./query.service');
 var app_routing_module_1 = require('./app-routing.module');
 var AppModule = (function () {
@@ -44,6 +45,7 @@ var AppModule = (function () {
                 sidebar_component_1.SidebarComponent,
                 tab_component_1.TabMenuComponent,
                 browse_component_1.BrowseComponent,
+                query_component_1.QueryComponent,
             ],
             /**
             * a singleton QueryService instance

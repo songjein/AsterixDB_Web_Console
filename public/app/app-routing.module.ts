@@ -2,12 +2,12 @@ import { NgModule }	from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 import { BrowseComponent } from './browse.component';
+import { QueryComponent } from './query.component';
 
 const routes: Routes = [
-	//{ path: '', redirectTo: '/dashboard', pathMatch: 'full' },
-	//{ path: 'dashboard', component: DashboardComponent },
-	//{ path: 'detail/:id', component: HeroDetailComponent },
-	{ path: 'browse', component: BrowseComponent }
+	{ path: '', redirectTo: '/query', pathMatch: 'full' },
+	{ path: 'browse', component: BrowseComponent },
+	{ path: 'query', component: QueryComponent }
 ];
 
 @NgModule({

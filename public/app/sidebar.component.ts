@@ -64,9 +64,9 @@ export class SidebarComponent implements OnInit {
 							label: dsName, 
 							icon: '', 
 							command: (e) => {
+								this.globals.isTableDrawed = false; 
 								this.globals.selectedDataverse = dvName;	
 								this.globals.selectedDataset = e.item.label;
-								this.globals.isTableDrawed = false; 
 								this.router.navigate(['/browse']);
 							}
 						}

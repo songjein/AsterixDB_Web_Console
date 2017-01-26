@@ -11,11 +11,11 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var core_1 = require('@angular/core');
 var router_1 = require('@angular/router');
 var browse_component_1 = require('./browse.component');
+var query_component_1 = require('./query.component');
 var routes = [
-    //{ path: '', redirectTo: '/dashboard', pathMatch: 'full' },
-    //{ path: 'dashboard', component: DashboardComponent },
-    //{ path: 'detail/:id', component: HeroDetailComponent },
-    { path: 'browse', component: browse_component_1.BrowseComponent }
+    { path: '', redirectTo: '/query', pathMatch: 'full' },
+    { path: 'browse', component: browse_component_1.BrowseComponent },
+    { path: 'query', component: query_component_1.QueryComponent }
 ];
 var AppRoutingModule = (function () {
     function AppRoutingModule() {

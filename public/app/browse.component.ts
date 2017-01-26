@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 
 import { DataTableModule, SharedModule } from 'primeng/primeng'; 
 import { QueryService } from './query.service';
@@ -23,7 +23,8 @@ import { Globals } from './globals';
 	`]
 })
 
-export class BrowseComponent implements OnInit {
+export class BrowseComponent implements OnInit, OnDestroy {
+	private intervalId: any;
 	data: any[];
 	cols: any[] = [];
 
@@ -38,6 +39,8 @@ export class BrowseComponent implements OnInit {
 
 		const dvName = this.globals.selectedDataverse;
 		const dsName = this.globals.selectedDataset;
+
+		if (!dvName && !dsName) return;
 
 		this.queryService
 			.getAQL(
@@ -58,10 +61,19 @@ export class BrowseComponent implements OnInit {
 	}
 
 	ngOnInit(): void {
-		setInterval(() => {
+		console.log('browse init');
+
+		this.intervalId = setInterval(() => {
 			if (this.globals.isTableDrawed) return;
 			this.browse();
 			this.globals.isTableDrawed = true;
 		}, 100);
+	}
+
+	ngOnDestroy(): void {
+		console.log('browse destroy');
+
+		if (this.intervalId)
+			clearInterval(this.intervalId);
 	}
 }

@@ -4,7 +4,13 @@ import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { RouterModule } from '@angular/router';
 
-import { PanelMenuModule, TabMenuModule, DataTableModule, SharedModule, MenuItem } from 'primeng/primeng';
+import { 
+	PanelMenuModule, 
+	TabMenuModule, 
+	DataTableModule, 
+	SharedModule, 
+	MenuItem 
+} from 'primeng/primeng';
 
 import { Globals }  from './globals';
 
@@ -13,6 +19,7 @@ import { NavbarComponent }  from './navbar.component';
 import { SidebarComponent }  from './sidebar.component';
 import { TabMenuComponent }  from './tab.component';
 import { BrowseComponent } 	 from './browse.component';
+import { QueryComponent } 	 from './query.component';
 
 import { QueryService } from './query.service';
 
@@ -37,6 +44,7 @@ import { AppRoutingModule } from './app-routing.module';
 		SidebarComponent,
 		TabMenuComponent,
 		BrowseComponent,
+		QueryComponent,
 	],
 
 	/**
