@@ -25,6 +25,8 @@ import { QueryService } from './query.service';
 
 import { AppRoutingModule } from './app-routing.module';
 
+import { ContenteditableDirective } from './contenteditable.directive';
+
 @NgModule({
   imports: [ 
 		BrowserModule, 
@@ -45,6 +47,7 @@ import { AppRoutingModule } from './app-routing.module';
 		TabMenuComponent,
 		BrowseComponent,
 		QueryComponent,
+		ContenteditableDirective,
 	],
 
 	/**

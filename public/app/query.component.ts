@@ -2,7 +2,10 @@ import { Component, OnInit } from '@angular/core';
 
 import { QueryService } from './query.service';
 
+import { ContenteditableDirective } from './contenteditable.directive'
+
 import { Globals } from './globals';
+
 
 @Component({
 	moduleId: module.id,
@@ -20,6 +23,10 @@ import { Globals } from './globals';
 			<textarea [(ngModel)]="query">
 			</textarea>
 
+			<div id="editor" contenteditable [(contenteditableModel)]="query" spellcheck="false">
+				hi
+			</div>
+
 			<h3 style="color:red">ToDo.. (auto-complete, code-hilight, query-latency history)</h3>
 			<h1>Query Result</h1>
 		</div>
@@ -28,6 +35,13 @@ import { Globals } from './globals';
 		textarea{
 			width: 600px;	
 			min-height: 300px;
+		}
+
+		#editor {
+			width: 600px;	
+			min-height: 300px;
+			border: 1px solid gray;
+			background: rgb(240,240,240);
 		}
 	`]
 })
