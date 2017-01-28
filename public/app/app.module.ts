@@ -20,6 +20,7 @@ import { SidebarComponent }  from './sidebar.component';
 import { TabMenuComponent }  from './tab.component';
 import { BrowseComponent } 	 from './browse.component';
 import { QueryComponent } 	 from './query.component';
+import { DatatypeComponent } 	 from './datatype.component';
 
 import { QueryService } from './query.service';
 
@@ -47,6 +48,7 @@ import { ContenteditableDirective } from './contenteditable.directive';
 		TabMenuComponent,
 		BrowseComponent,
 		QueryComponent,
+		DatatypeComponent,
 		ContenteditableDirective,
 	],
 

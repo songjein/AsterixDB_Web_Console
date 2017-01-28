@@ -38,7 +38,7 @@ export class TabMenuComponent {
 				label: 'DataType', 
 				icon: 'fa-info-circle',
 				command: (e) => {
-					this.router.navigate(['/query']);
+					this.router.navigate(['/datatype']);
 				}
 			},
 			{ 
