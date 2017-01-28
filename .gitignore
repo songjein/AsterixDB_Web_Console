@@ -32,4 +32,5 @@ npm-debug.log
 *.component.js
 *.module.js
 *.service.js
+*.directive.js
 *.js.map
