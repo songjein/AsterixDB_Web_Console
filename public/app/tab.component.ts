@@ -30,8 +30,7 @@ export class TabMenuComponent {
 				label: 'Browse', 
 				icon: 'fa-table',  
 				command: (e) => {
-					this.globals.isTableDrawed = false;
-					this.router.navigate(['/browse']);
+					this.router.navigate(['/proxy/browse']);
 				}
 			},
 			{ 

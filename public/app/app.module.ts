@@ -19,8 +19,8 @@ import { NavbarComponent }  from './navbar.component';
 import { SidebarComponent }  from './sidebar.component';
 import { TabMenuComponent }  from './tab.component';
 import { BrowseComponent } 	 from './browse.component';
-import { QueryComponent } 	 from './query.component';
-import { DatatypeComponent } 	 from './datatype.component';
+import { QueryComponent } 	 from './query.component'; import { DatatypeComponent } 	 from './datatype.component'; 
+import { ProxyComponent } 	 from './proxy.component';
 
 import { QueryService } from './query.service';
 
@@ -43,6 +43,7 @@ import { ContenteditableDirective } from './contenteditable.directive';
 
   declarations: [
 		AppComponent, 
+		ProxyComponent,
 		NavbarComponent,
 		SidebarComponent,
 		TabMenuComponent,

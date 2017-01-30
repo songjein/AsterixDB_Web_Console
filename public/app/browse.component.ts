@@ -57,19 +57,10 @@ export class BrowseComponent implements OnInit, OnDestroy {
 	}
 
 	ngOnInit(): void {
-		console.log('browse init');
-
-		this.intervalId = setInterval(() => {
-			if (this.globals.isTableDrawed) return;
-			this.browse();
-			this.globals.isTableDrawed = true;
-		}, 100);
+		this.browse();
 	}
 
 	ngOnDestroy(): void {
 		console.log('browse destroy');
-
-		if (this.intervalId)
-			clearInterval(this.intervalId);
 	}
 }

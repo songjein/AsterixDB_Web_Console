@@ -34,3 +34,4 @@ npm-debug.log
 *.service.js
 *.directive.js
 *.js.map
+globals.js

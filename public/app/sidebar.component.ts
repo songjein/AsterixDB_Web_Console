@@ -8,13 +8,13 @@ import { Globals } from './globals';
 
 @Component({
 	moduleId: module.id,
-	selector: 'sidebar',
+	selector: 'sidebar', 
 	templateUrl: 'sidebar.component.html',
 	styles:[`
 	`]
 })
 
-export class SidebarComponent implements OnInit {
+export class SidebarComponent implements OnInit{
 	
 	items: MenuItem[] = [];
 
@@ -60,10 +60,12 @@ export class SidebarComponent implements OnInit {
 							label: dsName, 
 							icon: '', 
 							command: (e) => {
-								this.globals.isTableDrawed = false; 
 								this.globals.selectedDataverse = dvName;	
 								this.globals.selectedDataset = e.item.label;
-								this.router.navigate(['/browse']);
+
+								// navigate through the proxy component
+								// for the component in router-outlet refreshing
+								this.router.navigate(['/proxy/browse']);
 							}
 						}
 					);
