@@ -9,6 +9,6 @@ import { Injectable } from '@angular/core';
 
 Injectable()
 export class Globals{
-	selectedDataverse = "";
-	selectedDataset = "";
+	selectedDataverse : string; 
+	selectedDataset : string;
 }
