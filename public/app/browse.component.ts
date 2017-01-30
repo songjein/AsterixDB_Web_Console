@@ -1,8 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 
 import { DataTableModule, SharedModule } from 'primeng/primeng'; 
-import { QueryService } from './query.service';
-
+import { QueryService } from './query.service'; 
 import { Globals } from './globals';
 
 @Component({
@@ -14,7 +13,7 @@ import { Globals } from './globals';
 })
 
 export class BrowseComponent implements OnInit, OnDestroy {
-	private intervalId: any;
+
 	data: any[];
 	cols: any[] = [];
 

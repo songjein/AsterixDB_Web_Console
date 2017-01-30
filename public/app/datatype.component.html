@@ -1,0 +1,17 @@
+<h2 *ngIf="isOpen" >
+	{{datatype}}
+	(isOpen:<span style="color:red">{{isOpen}}</span>)
+</h2>
+<p-dataTable [value]="data" [rows]="10" [paginator]="true" [pageLinks]="10" [responsive]="true" >
+	<p-column *ngFor="let col of cols" 
+		[field]="col.field" [header]="col.header"></p-column>
+	
+	<template let-d="rowData" >
+		<div class="ui-grid ui-grid-responsive ui-fluid" style="font-size:16px; padding: 20px">
+			<div class="ui-grid-row">
+				{{d}}
+			</div>
+		</div>
+	</template>
+</p-dataTable>
+

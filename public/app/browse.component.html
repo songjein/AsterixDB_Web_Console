@@ -1,3 +1,6 @@
+<h2>
+	{{globals.selectedDataset}}
+</h2>
 <p-dataTable [value]="data" expandableRows="true" [rows]="10" [paginator]="true" [pageLinks]="10" [responsive]="true" >
 	<p-column expander="true" [style]="{ width: '30px'}"  styleClass="col-icon"></p-column>
 	<p-column *ngFor="let col of cols" 
