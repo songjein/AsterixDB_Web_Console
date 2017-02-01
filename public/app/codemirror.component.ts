@@ -72,6 +72,25 @@ export class CodemirrorComponent {
    * Constructor
    */
   constructor(){
+		/**
+		 * Custom mode for AsterixDB
+		 *
+		 */
+		CodeMirror.defineMode("asterix", function(){
+			return {
+				token: function(stream, state){
+					if (stream.match("dataverse")){
+						return "asterix";	
+					}	
+					else if (stream.match("in")){
+						return "asterix";	
+					} else {
+						stream.next();	
+						return null;
+					}
+				}	
+			};	
+		});
 	}
 
   get value() { return this._value; };
