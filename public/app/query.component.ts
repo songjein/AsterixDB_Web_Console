@@ -23,22 +23,12 @@ import { Globals } from './globals';
 				(blur)="onBlur()">
 			</codemirror>
 
+			<pre>{{query}}</pre>
+
 			<!--<h1>Query Result</h1>-->
 		</div>
 	`,
 	styles: [`
-		textarea{
-			width: 600px;	
-			min-height: 300px;
-		}
-
-		#editor {
-			width: 600px;	
-			min-height: 300px;
-			border: 1px solid gray;
-			background: rgb(240,240,240);
-		}
-
 	`]
 })
 
@@ -50,7 +40,7 @@ export class QueryComponent implements OnInit {
 		private globals: Globals,
 		private queryService: QueryService
 	) { 
-		this.config = { mode: "asterix", lineNumbers: true}	;
+		this.config = { mode: "asterix-aql", lineNumbers: true}	;
 	}
 
 	

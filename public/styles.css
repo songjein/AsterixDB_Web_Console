@@ -9,6 +9,23 @@ body {
 /**
  * codemirror code hilight style
  */
-.cm-asterix{
+.cm-variable{
+	color: grey;	
+}
+
+.cm-dot-variable{
+	color: darkgrey;	
+}
+
+.cm-string{
+	color: blue;	
+}
+
+.cm-keyword{
 	color: red;	
+	font-weight: bold;
+}
+
+.CodeMirror{
+	border: 1px solid lightgray;
 }

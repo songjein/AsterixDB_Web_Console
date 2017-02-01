@@ -76,20 +76,86 @@ export class CodemirrorComponent {
 		 * Custom mode for AsterixDB
 		 *
 		 */
-		CodeMirror.defineMode("asterix", function(){
+		CodeMirror.defineMode("asterix-aql", function(){
+		  var KEYWORD_MATCH = [
+				// AQL
+				"drop", "dataverse", "dataset", 
+				"if", "exists", "create", 
+				"use", "type", "as", "closed", 
+				"primary", "key",  "hints", "cardinality", 
+				"index", "on", "btree", "rtree", "keyword", 
+				"for", "in", "Metadata", "Dataset", 
+				"return", "Index", "load", "using", "localfs", "path", "format",
+				
+				// Query (not perfect) 
+				"from", "in", "with", "group", "by", "select",
+				"let", "where", "order", "asc", "desc", "limit",
+				"keeping", "offset", "distinct", "or", "and",
+
+				// Built in functions (not yet)
+
+				// Asterix Data Model 
+				// Primitive type
+				"boolean", 
+				"tinyint", "smallint", "integer", "bigint", 
+				"float", "double", 
+				"string", 
+				"binary", "hex", "base64", 
+				"point", "line", "rectangle", "circle", "polygon", 
+				"date", "time", "datetime", "duration", "interval", "uuid", 
+				// Incomplete information type
+				"null", "missing",
+				// Derived type
+				// object {}, array [], multiset {{}}
+			];
+
+			//"(", ")","{{", "}}", "[", "]",	"{", "}",  ";", ",", ":","?", "=", 
+			var VAR_MATCH = /[$][a-zA-Z]+(\d*)/;
+			var DOT_MATCH = /[.](\S)*/;
+			var DOUBLE_QUOTE_MATCH = /["].*["]/;
+			var SINGLE_QUOTE_MATCH = /['].*[']/;
+			var BREAK_POINT = /(\s)/;	
+
+			/////////////////////////////////////////////////////			
 			return {
-				token: function(stream, state){
-					if (stream.match("dataverse")){
-						return "asterix";	
-					}	
-					else if (stream.match("in")){
-						return "asterix";	
-					} else {
-						stream.next();	
-						return null;
+				startState: function() {return {inString: false};},
+				token: function(stream, state) {
+					if (state.newLine == undefined)state.newLine = true;
+
+					//match variable reference
+					if (stream.match(VAR_MATCH)) {
+						return "variable";
 					}
-				}	
-			};	
+
+					if (stream.match(DOT_MATCH)) {
+						return "dot-variable";
+					}
+
+					//string variable match
+					if (stream.match(DOUBLE_QUOTE_MATCH)) {
+						return "string";
+					}
+					if (stream.match(SINGLE_QUOTE_MATCH)) {
+						return "string";
+					}
+
+					//keyword match
+					for (var i in KEYWORD_MATCH){
+						if (state.newLine && stream.match(KEYWORD_MATCH[i])){
+								return "keyword";
+						 }
+					}
+
+					if (stream.peek() === " " || stream.peek() === null){
+						state.newLine = true;
+					}else{
+						state.newLine = false;
+					}
+					stream.next();
+					return null;
+				}
+			};
+			/////////////////////////////////////////////////////
 		});
 	}
 
