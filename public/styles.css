@@ -5,3 +5,10 @@ body {
 	font-size: 14px;
 	color: #546E7A;
 }
+
+/**
+ * codemirror code hilight style
+ */
+.cm-asterix{
+	color: red;	
+}

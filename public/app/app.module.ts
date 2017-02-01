@@ -12,6 +12,8 @@ import {
 	MenuItem 
 } from 'primeng/primeng';
 
+import { CodemirrorComponent } from './codemirror.component';
+
 import { Globals }  from './globals';
 
 import { AppComponent }  from './app.component';
@@ -19,14 +21,13 @@ import { NavbarComponent }  from './navbar.component';
 import { SidebarComponent }  from './sidebar.component';
 import { TabMenuComponent }  from './tab.component';
 import { BrowseComponent } 	 from './browse.component';
-import { QueryComponent } 	 from './query.component'; import { DatatypeComponent } 	 from './datatype.component'; 
+import { QueryComponent } 	 from './query.component'; 
+import { DatatypeComponent } 	 from './datatype.component'; 
 import { ProxyComponent } 	 from './proxy.component';
 
 import { QueryService } from './query.service';
 
 import { AppRoutingModule } from './app-routing.module';
-
-import { ContenteditableDirective } from './contenteditable.directive';
 
 @NgModule({
   imports: [ 
@@ -50,7 +51,7 @@ import { ContenteditableDirective } from './contenteditable.directive';
 		BrowseComponent,
 		QueryComponent,
 		DatatypeComponent,
-		ContenteditableDirective,
+		CodemirrorComponent,
 	],
 
 	/**

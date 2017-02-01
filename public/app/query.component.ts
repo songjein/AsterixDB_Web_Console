@@ -2,10 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 import { QueryService } from './query.service';
 
-import { ContenteditableDirective } from './contenteditable.directive'
-
 import { Globals } from './globals';
-
 
 @Component({
 	moduleId: module.id,
@@ -20,15 +17,13 @@ import { Globals } from './globals';
 
 			<div style="height:10px;"></div>
 
-			<textarea [(ngModel)]="query">
-			</textarea>
+			<codemirror [(ngModel)]="query"
+				[config]="config"
+				(focus)="onFocus()"
+				(blur)="onBlur()">
+			</codemirror>
 
-			<div id="editor" contenteditable [(contenteditableModel)]="query" spellcheck="false">
-				hi
-			</div>
-
-			<h3 style="color:red">ToDo.. (auto-complete, code-hilight, query-latency history)</h3>
-			<h1>Query Result</h1>
+			<!--<h1>Query Result</h1>-->
 		</div>
 	`,
 	styles: [`
@@ -43,6 +38,7 @@ import { Globals } from './globals';
 			border: 1px solid gray;
 			background: rgb(240,240,240);
 		}
+
 	`]
 })
 
@@ -53,7 +49,9 @@ export class QueryComponent implements OnInit {
 	constructor(
 		private globals: Globals,
 		private queryService: QueryService
-	) { }
+	) { 
+		this.config = { mode: "asterix", lineNumbers: true}	;
+	}
 
 	
 	browse(): void {
@@ -73,20 +71,27 @@ export class QueryComponent implements OnInit {
 	}
 
 	ngOnInit(): void {
-		this.query = `use dataverse ;
+		this.query = ""; 
 
-for $d in dataset 
-where
-return $d
-		` 
+		/*
+		this.query = `use dataverse ;
+		for $d in dataset 
+		where
+		return $d;` 
 
 		if (this.globals.selectedDataverse) {
-this.query = `use dataverse ${this.globals.selectedDataverse};	
-
-for $d in dataset ${this.globals.selectedDataset} ;
-where 
-return $d
-`;
+			this.query = `use dataverse ${this.globals.selectedDataverse};	
+				for $d in dataset ${this.globals.selectedDataset} ;
+				where 
+				return $d`;
 		}
+		*/
+	}
+
+	onFocus(){
+	
+	}
+	onBlur(){
+	
 	}
 }
