@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 
 import { QueryService } from './query.service';
+import { BrowseComponent } from './browse.component';
 
 import { Globals } from './globals';
 
@@ -8,7 +9,7 @@ import { Globals } from './globals';
 	moduleId: module.id,
 	selector: 'query-tab',
 	template: `
-		<div style="width:80%; overflow-y:auto; padding: 10px; ">
+		<div style="width:95%; overflow-y:auto; padding: 10px; ">
 			<form>
 				<strong>mode : </strong>
 				<input type="radio" name="mode" value="SQL++" disabled>SQL++,  
@@ -23,16 +24,28 @@ import { Globals } from './globals';
 				(blur)="onBlur()">
 			</codemirror>
 
-			<pre>{{query}}</pre>
+			<button id="sendQuery" (click)="onClick()">SendQuery</button>
 
-			<!--<h1>Query Result</h1>-->
+			<div style="top:50px; clear:both;"></div>
+
+			<browse-tab [isForQueryTab]="true"></browse-tab>
 		</div>
 	`,
 	styles: [`
+		#sendQuery {
+			float: right;
+			font-family: Arial;
+			background-color: #eee;
+			padding: 5px 10px;
+			border-radius: 4px;
+			margin-top: 10px;
+		}
 	`]
 })
 
 export class QueryComponent implements OnInit {
+
+	@ViewChild(BrowseComponent) browseComponent: BrowseComponent
 
 	query: string; 
 
@@ -42,40 +55,13 @@ export class QueryComponent implements OnInit {
 	) { 
 		this.config = { mode: "asterix-aql", lineNumbers: true}	;
 	}
-
 	
-	browse(): void {
-
-		const dvName = this.globals.selectedDataverse;
-		const dsName = this.globals.selectedDataset;
-
-		this.queryService
-			.getAQL(
-				`
-					use dataverse ${dvName};
-					for $ds in dataset ${dsName} return $ds;
-				`
-			)
-			.then(result => {
-			});
+	onClick(){
+		this.browseComponent.browseForQueryTab(this.query);
 	}
 
 	ngOnInit(): void {
 		this.query = ""; 
-
-		/*
-		this.query = `use dataverse ;
-		for $d in dataset 
-		where
-		return $d;` 
-
-		if (this.globals.selectedDataverse) {
-			this.query = `use dataverse ${this.globals.selectedDataverse};	
-				for $d in dataset ${this.globals.selectedDataset} ;
-				where 
-				return $d`;
-		}
-		*/
 	}
 
 	onFocus(){

@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, Input , OnDestroy } from '@angular/core';
 
 import { DataTableModule, SharedModule } from 'primeng/primeng'; 
 import { QueryService } from './query.service'; 
@@ -13,7 +13,19 @@ import { Globals } from './globals';
 })
 
 export class BrowseComponent implements OnInit, OnDestroy {
+	
+	/**
+	 * If this variable is set to true
+	 * ngInit do not call browse() function
+	 */
+	@Input()
+	isForQueryTab: boolean;
+	
+	isLoadingForQueryTab: boolean;
 
+	/**
+	 * data, cols will be injected to the table 
+	 */
 	data: any[];
 	cols: any[] = [];
 
@@ -25,6 +37,9 @@ export class BrowseComponent implements OnInit, OnDestroy {
 	) { }
 
 	
+	/**
+	 * Default browse function for browse-tab 
+	 */
 	browse(): void {
 		this.cols = [];
 
@@ -51,12 +66,35 @@ export class BrowseComponent implements OnInit, OnDestroy {
 			});
 	}
 
+	/**
+	 * Browse function for query-tab
+	 */
+	browseForQueryTab(query: string): void {
+		this.isLoadingForQueryTab = true;
+		this.cols = [];
+		this.queryService
+			.getAQL(query)
+			.then(result => {
+				this.data = result;
+				const labels = Object.keys(result[0]);
+				for ( var i = 0; i < labels.length; i++ ) {
+					this.cols.push(
+						{ field: labels[i], header: labels[i] }
+					);
+				}
+				this.isLoadingForQueryTab = false;
+			});
+	}
+
+
 	showDataInRow(d: any[]) {
 		this.selectedRow = d;
 	}
 
 	ngOnInit(): void {
-		this.browse();
+		if (!this.isForQueryTab) {
+			this.browse();
+		}
 	}
 
 	ngOnDestroy(): void {

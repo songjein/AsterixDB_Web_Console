@@ -29,6 +29,10 @@
 	Loading...
 </h1>
 
-<h1 *ngIf="!globals.selectedDataset">
+<h1 *ngIf="isLoadingForQueryTab">
+	Loading...
+</h1>
+
+<h1 *ngIf="!isForQueryTab && !globals.selectedDataset">
 	Empty Result, please select dataset
 </h1>
