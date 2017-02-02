@@ -9,6 +9,7 @@ import { Injectable } from '@angular/core';
 
 Injectable()
 export class Globals{
-	selectedDataverse : string; 
-	selectedDataset : string;
+	selectedDataverse: string; 
+	selectedDataset: string;
+	selectedTab: string;
 }

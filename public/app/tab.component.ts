@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
 
 import { Globals } from './globals';
 
@@ -20,7 +19,6 @@ export class TabMenuComponent {
 	private activeItem: MenuItem;
 
 	constructor(
-		private router: Router,
 		private globals: Globals
 	){}
 
@@ -29,26 +27,29 @@ export class TabMenuComponent {
 			{ 
 				label: 'Browse', 
 				icon: 'fa-table',  
+				routerLink: ['/proxy/browse'],
 				command: (e) => {
-					this.router.navigate(['/proxy/browse']);
+					this.globals.selectedTab = "browse"
 				}
 			},
 			{ 
 				label: 'DataType', 
 				icon: 'fa-info-circle',
+				routerLink: ['/proxy/datatype'],
 				command: (e) => {
-					this.router.navigate(['/datatype']);
+					this.globals.selectedTab = "datatype"
 				}
 			},
 			{ 
 				label: 'Query', 
 				icon: 'fa-terminal',
+				routerLink: ['/proxy/query'],
 				command: (e) => {
-					this.router.navigate(['/query']);
+					this.globals.selectedTab = "query"
 				}
 			}
 		];
 
-		this.activeItem = this.items[2];
+		this.activeItem = this.items[0];
 	}
 }

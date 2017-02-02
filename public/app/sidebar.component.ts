@@ -65,7 +65,13 @@ export class SidebarComponent implements OnInit{
 
 								// navigate through the proxy component
 								// for the component in router-outlet refreshing
-								this.router.navigate(['/proxy/browse']);
+								// /proxy/:routed-component
+								if (this.globals.selectedTab == "browse")
+									this.router.navigate(['/proxy/browse']);
+								else if (this.globals.selectedTab == "datatype")
+									this.router.navigate(['/proxy/datatype']);
+								else
+									this.router.navigate(['/proxy/browse']);
 							}
 						}
 					);
