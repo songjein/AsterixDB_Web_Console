@@ -1,6 +1,6 @@
 import { Component, OnInit, Input , OnDestroy } from '@angular/core';
 
-import { DataTableModule, SharedModule } from 'primeng/primeng'; 
+import { DataTableModule, SharedModule, ButtonModule } from 'primeng/primeng'; 
 import { QueryService } from './query.service'; 
 import { Globals } from './globals';
 

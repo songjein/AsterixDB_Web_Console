@@ -9,7 +9,8 @@ import {
 	TabMenuModule, 
 	DataTableModule, 
 	SharedModule, 
-	MenuItem 
+	MenuItem,
+	ButtonModule,
 } from 'primeng/primeng';
 
 import { CodemirrorComponent } from './codemirror.component';
@@ -41,6 +42,7 @@ import { AppRoutingModule } from './app-routing.module';
 		TabMenuModule,
 		DataTableModule,
 		SharedModule,
+		ButtonModule,
 	],
 
   declarations: [
