@@ -35,6 +35,7 @@ export class SidebarComponent implements OnInit{
 							icon: '', 
 							items: [],
 							command: (e) => {
+								this.globals.selectedDataset = null;
 								this.globals.selectedDataverse = e.item.label;	
 							}
 						}
