@@ -1,4 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+
+import { Router } from '@angular/router';
 
 import { Globals } from './globals';
 
@@ -14,12 +16,15 @@ import { TabMenuModule, MenuItem } from 'primeng/primeng';
 	`]
 })
 
-export class TabMenuComponent {
+export class TabMenuComponent implements OnInit, OnDestroy {
 	private items: MenuItem[];
 	private activeItem: MenuItem;
 
+	intervalId: any;
+
 	constructor(
-		private globals: Globals
+		private globals: Globals,
+		private router: Router,
 	){}
 
 	ngOnInit() {
@@ -50,6 +55,21 @@ export class TabMenuComponent {
 			}
 		];
 
-		this.activeItem = this.items[0];
+		// temporal trick.. :'(
+		// for sync between active-tab and routed component
+		this.intervalId = setInterval(() => {
+			console.log("router url", this.router.url);
+			if (this.router.url == "/browse")
+				this.activeItem = this.items[0] 
+			else if (this.router.url == "/datatype")
+				this.activeItem = this.items[1] 
+			else if (this.router.url == "/query")
+				this.activeItem = this.items[2] 
+		}, 300)
 	}
+
+	ngOnDestroy(): void {
+		clearInterval(this.intervalId);
+	}
+
 }
