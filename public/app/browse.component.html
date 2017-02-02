@@ -1,6 +1,7 @@
-<h2>
+<h2 *ngIf="!isForQueryTab">
 	{{globals.selectedDataset}}
 </h2>
+
 <p-dataTable *ngIf="data" [value]="data" expandableRows="true" [rows]="10" [paginator]="true" [pageLinks]="10" [responsive]="true" >
 	<p-column expander="true" [style]="{ width: '30px'}"  styleClass="col-icon"></p-column>
 	<p-column *ngFor="let col of cols" 
@@ -25,7 +26,7 @@
 	</template>
 </p-dataTable>
 
-<h1 *ngIf="!data && globals.selectedDataset">
+<h1 *ngIf="!isForQueryTab && !data && globals.selectedDataset">
 	Loading...
 </h1>
 

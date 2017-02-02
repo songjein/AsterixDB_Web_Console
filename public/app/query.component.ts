@@ -26,7 +26,7 @@ import { Globals } from './globals';
 
 			<button id="sendQuery" (click)="onClick()">SendQuery</button>
 
-			<div style="top:50px; clear:both;"></div>
+			<div style="clear:both;"></div>
 
 			<browse-tab [isForQueryTab]="true"></browse-tab>
 		</div>
@@ -39,6 +39,7 @@ import { Globals } from './globals';
 			padding: 5px 10px;
 			border-radius: 4px;
 			margin-top: 10px;
+			margin-bottom: 20px;
 		}
 	`]
 })
