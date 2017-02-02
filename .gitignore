@@ -35,3 +35,4 @@ npm-debug.log
 *.directive.js
 *.js.map
 globals.js
+*.pipe.js

@@ -51,7 +51,7 @@ export class BrowseComponent implements OnInit, OnDestroy {
 			});
 	}
 
-	showDataInRow(d: any) {
+	showDataInRow(d: any[]) {
 		this.selectedRow = d;
 	}
 
