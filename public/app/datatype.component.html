@@ -2,6 +2,19 @@
 	{{datatype}}
 	(isOpen:<span style="color:red">{{isOpen}}</span>)
 </h2>
+
+<h1 *ngIf="!data && globals.selectedDataset">
+	Loading...
+</h1>
+
+<h1 *ngIf="!globals.selectedDataverse">
+	Empty Result, please select dataverse
+</h1>
+
+<h1 *ngIf="!globals.selectedDataset">
+	Please select dataset
+</h1>
+
 <p-dataTable *ngIf="data" [value]="data" [rows]="10" [paginator]="true" [pageLinks]="10" [responsive]="true" >
 	<p-column *ngFor="let col of cols" 
 		[field]="col.field" [header]="col.header"></p-column>
@@ -14,11 +27,3 @@
 		</div>
 	</template>
 </p-dataTable>
-
-<h1 *ngIf="!data && globals.selectedDataset">
-	Loading...
-</h1>
-
-<h1 *ngIf="!globals.selectedDataset">
-	Empty Result, please select dataset
-</h1>

@@ -2,6 +2,22 @@
 	{{globals.selectedDataset}}
 </h2>
 
+<h1 *ngIf="!isForQueryTab && !data && globals.selectedDataset">
+	Loading...
+</h1>
+
+<h1 *ngIf="isLoadingForQueryTab">
+	Loading...
+</h1>
+
+<h1 *ngIf="!isForQueryTab && !globals.selectedDataverse">
+	Empty Result, please select dataverse
+</h1>
+
+<h1 *ngIf="!isForQueryTab && !globals.selectedDataset">
+	Please select dataset
+</h1>
+
 <p-dataTable #dt *ngIf="data" [value]="data" expandableRows="true" [rows]="10" [paginator]="true" [pageLinks]="10" [responsive]="true" exportFilename="data">
 	<p-header>
 		<div class="ui-helper-clearfix">
@@ -36,15 +52,3 @@
 	</template>
 -->
 </p-dataTable>
-
-<h1 *ngIf="!isForQueryTab && !data && globals.selectedDataset">
-	Loading...
-</h1>
-
-<h1 *ngIf="isLoadingForQueryTab">
-	Loading...
-</h1>
-
-<h1 *ngIf="!isForQueryTab && !globals.selectedDataset">
-	Empty Result, please select dataset
-</h1>
