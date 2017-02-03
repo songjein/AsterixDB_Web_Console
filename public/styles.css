@@ -29,3 +29,12 @@ body {
 .CodeMirror{
 	border: 1px solid lightgray;
 }
+
+/**
+ * style for angular2-prettyjson
+ */
+.string { color: green; }
+.number { color: darkorange; }
+.boolean { color: blue; }
+.null { color: magenta; }
+.key { color: red; }

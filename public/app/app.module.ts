@@ -15,6 +15,8 @@ import {
 
 import { CodemirrorComponent } from './codemirror.component';
 
+import { PrettyJsonModule } from 'angular2-prettyjson';
+
 import { Globals }  from './globals';
 
 import { AppComponent }  from './app.component';
@@ -43,6 +45,7 @@ import { AppRoutingModule } from './app-routing.module';
 		DataTableModule,
 		SharedModule,
 		ButtonModule,
+		PrettyJsonModule,
 	],
 
   declarations: [

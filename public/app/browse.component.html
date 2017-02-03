@@ -30,6 +30,11 @@
 	
 	<template let-d pTemplate="rowexpansion">
 		<div class="ui-grid ui-grid-responsive ui-fluid" style="font-size:16px; padding: 20px">
+			<!-- angular2-prettyjson -->
+			<pre [innerHTML]=" d | prettyjson:3"></pre>
+			<!-- angular2-prettyjson -->
+
+			<!--
 			<div class="ui-grid-row" *ngFor="let r of d | keys" >
 				<div class="ui-grid-col-3">
 					{{r.key}}
@@ -43,6 +48,7 @@
 					</div>
 				</div>
 			</div>
+			-->
 		</div>
 	</template>
 

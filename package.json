@@ -17,6 +17,7 @@
     "@angular/platform-browser-dynamic": "~2.4.0",
     "@angular/router": "~3.4.0",
     "angular-in-memory-web-api": "~0.2.4",
+    "angular2-prettyjson": "^2.0.3",
     "body-parser": "~1.15.2",
     "codemirror": "^5.23.0",
     "cookie-parser": "~1.4.3",

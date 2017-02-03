@@ -58,7 +58,6 @@ export class TabMenuComponent implements OnInit, OnDestroy {
 		// temporal trick.. :'(
 		// for sync between active-tab and routed component
 		this.intervalId = setInterval(() => {
-			console.log("router url", this.router.url);
 			if (this.router.url == "/browse")
 				this.activeItem = this.items[0] 
 			else if (this.router.url == "/datatype")
