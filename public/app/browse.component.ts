@@ -91,6 +91,13 @@ export class BrowseComponent implements OnInit, OnDestroy {
 		this.selectedRow = d;
 	}
 
+	expandAll(){
+		const btns = document.getElementsByClassName('ui-row-toggler');
+		for (let btn of btns){
+			btn.click();	
+		}
+	}
+
 	ngOnInit(): void {
 		if (!this.isForQueryTab) {
 			this.browse();

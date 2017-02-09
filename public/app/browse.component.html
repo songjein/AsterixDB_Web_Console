@@ -18,15 +18,16 @@
 	Please select dataset
 </h1>
 
+
 <p-dataTable #dt *ngIf="data" [value]="data" expandableRows="true" [rows]="10" [paginator]="true" [pageLinks]="10" [responsive]="true" exportFilename="data">
 	<p-header>
 		<div class="ui-helper-clearfix">
-			<button type="button" pButton icon="fa-file-o" iconPos="left" label="CSV" (click)="dt.exportCSV()" style="float:right"></button>
-			<button type="button" pButton (click)="toggleRow(dt)" label="Expand All" style="float:right"></button>
-			<button type="button" pButton (click)="toggleRow(dt)" label="Collapse All" style="float:right"></button>
+			<button type="button" pButton icon="fa-expand" iconPos="left" label="expandAll" (click)="expandAll()" style="float:left; margin-right: 5px;"></button>
+			<button type="button" pButton icon="fa-compress" iconPos="left" label="collapseAll" (click)="expandAll()" style="float:left; margin-right: 5px;"></button>
+			<button type="button" pButton icon="fa-file-o" iconPos="left" label="CSV" (click)="dt.exportCSV()" style="float:left"></button>
 		</div>
 	</p-header>
-	<p-column expander="true" [style]="{ width: '30px'}"  styleClass="col-icon"></p-column>
+	<p-column expander="true" [style]="{ width: '30px'}" styleClass="col-icon"></p-column>
 	<p-column *ngFor="let col of cols" 
 		[field]="col.field" [header]="col.header"></p-column>
 	
