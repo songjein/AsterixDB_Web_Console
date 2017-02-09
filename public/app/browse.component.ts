@@ -1,6 +1,6 @@
 import { Component, OnInit, Input , OnDestroy } from '@angular/core';
 
-import { DataTableModule, SharedModule, ButtonModule } from 'primeng/primeng'; 
+import { DataTableModule, SharedModule, ButtonModule, ToggleButtonModule } from 'primeng/primeng'; 
 import { QueryService } from './query.service'; 
 import { Globals } from './globals';
 
@@ -22,6 +22,13 @@ export class BrowseComponent implements OnInit, OnDestroy {
 	isForQueryTab: boolean;
 	
 	isLoadingForQueryTab: boolean;
+
+	/**
+	 * For toggler button ('Expnad All' / 'Collapse All')
+	 * - It is to make toggler button to 'on' status
+	 * - If you want to make it to 'off' status, change 'true' to 'false'
+	 */
+	toggler: boolean = true;
 
 	/**
 	 * data, cols will be injected to the table 
@@ -91,8 +98,9 @@ export class BrowseComponent implements OnInit, OnDestroy {
 		this.selectedRow = d;
 	}
 
-	expandAll(){
+	expandToggle(self){
 		const btns = document.getElementsByClassName('ui-row-toggler');
+
 		for (let btn of btns){
 			btn.click();	
 		}

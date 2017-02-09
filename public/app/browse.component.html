@@ -22,9 +22,8 @@
 <p-dataTable #dt *ngIf="data" [value]="data" expandableRows="true" [rows]="10" [paginator]="true" [pageLinks]="10" [responsive]="true" exportFilename="data">
 	<p-header>
 		<div class="ui-helper-clearfix">
-			<button type="button" pButton icon="fa-expand" iconPos="left" label="expandAll" (click)="expandAll()" style="float:left; margin-right: 5px;"></button>
-			<button type="button" pButton icon="fa-compress" iconPos="left" label="collapseAll" (click)="expandAll()" style="float:left; margin-right: 5px;"></button>
-			<button type="button" pButton icon="fa-file-o" iconPos="left" label="CSV" (click)="dt.exportCSV()" style="float:left"></button>
+			<button type="button" pButton icon="fa-file-o" iconPos="left" label="CSV" (click)="dt.exportCSV()" style="float:right"></button>
+			<p-toggleButton [(ngModel)]="toggler" onLabel="Expand All" offLabel="Collapse All" onIcon="fa-expand" offIcon="fa-compress" (onChange)="expandToggle($event)"></p-toggleButton>
 		</div>
 	</p-header>
 	<p-column expander="true" [style]="{ width: '30px'}" styleClass="col-icon"></p-column>

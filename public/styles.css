@@ -38,3 +38,10 @@ body {
 .boolean { color: blue; }
 .null { color: magenta; }
 .key { color: red; }
+
+/**
+ * style for toggle button in 'browser'
+ */
+p-toggleButton {
+	float: right;
+}

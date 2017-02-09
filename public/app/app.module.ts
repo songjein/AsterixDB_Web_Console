@@ -11,6 +11,7 @@ import {
 	SharedModule, 
 	MenuItem,
 	ButtonModule,
+	ToggleButtonModule,
 } from 'primeng/primeng';
 
 import { CodemirrorComponent } from './codemirror.component';
@@ -46,6 +47,7 @@ import { AppRoutingModule } from './app-routing.module';
 		SharedModule,
 		ButtonModule,
 		PrettyJsonModule,
+		ToggleButtonModule,
 	],
 
   declarations: [
