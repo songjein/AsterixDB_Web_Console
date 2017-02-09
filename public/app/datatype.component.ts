@@ -18,6 +18,13 @@ export class DatatypeComponent implements OnInit, OnDestroy {
 	datatype: string;
 	isOpen : boolean;
 
+	// needed for find the nested datatype
+	MetadataDataset : any[];
+	MetadataDatatype : any[];
+	nestedDatatypes = [];
+	nestedDatatypesDatas = [];
+
+	// table data
 	data: any[];
 	cols: any[] = [];
 
@@ -44,6 +51,8 @@ export class DatatypeComponent implements OnInit, OnDestroy {
 				`
 			)
 			.then(result => {
+				this.MetadataDataset = result;
+
 				for ( var i = 0; i < result.length; i++ ) {
 					const tdvName = result[i]["DataverseName"];
 					const tdsName = result[i]["DatasetName"];
@@ -63,6 +72,8 @@ export class DatatypeComponent implements OnInit, OnDestroy {
 				`
 			)
 			.then(result => {
+				this.MetadataDatatype = result;
+
 				for ( var i = 0; i < result.length; i++ ) {
 					const tdatatype = result[i]["DatatypeName"];
 					if (tdatatype == this.datatype){
@@ -79,7 +90,30 @@ export class DatatypeComponent implements OnInit, OnDestroy {
 						}
 					}
 				}
+				
+
+				/**
+				 * Find nested Datatype
+				 * Find nested Datatype
+				 */
+				for ( var k = 0 ; k < this.data.length; k++ ){
+					// current table's fields
+					const type = this.data[k]["FieldType"];
+					
+					// scan Metadata's Datatype
+					for ( var l = 0 ; l < this.MetadataDatatype.length; l++){
+						const tdvName = this.MetadataDatatype[l]["DataverseName"];
+						const tdtName = this.MetadataDatatype[l]["DatatypeName"];
+						if ( tdvName == dvName && tdtName == type ){
+							this.nestedDatatypesDatas.push(this.MetadataDatatype[l]);
+							this.nestedDatatypes.push(type);
+						}
+					}
+				}
+				console.log("nested datatype", this.nestedDatatypes);
+				console.log("nested datatype data", this.nestedDatatypesDatas);
 			});
+
 	}
 
 	ngOnInit(): void {
