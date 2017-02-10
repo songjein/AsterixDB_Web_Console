@@ -76,7 +76,8 @@ export class DatatypeComponent implements OnInit, OnDestroy {
 
 				for ( var i = 0; i < result.length; i++ ) {
 					const tdatatype = result[i]["DatatypeName"];
-					if (tdatatype == this.datatype){
+					const tdataverse = result[i]["DataverseName"];
+					if (tdataverse == dvName && tdatatype == this.datatype){
 						const record = result[i]["Derived"]["Record"];
 						this.isOpen = record["IsOpen"];
 						this.data = record["Fields"];
