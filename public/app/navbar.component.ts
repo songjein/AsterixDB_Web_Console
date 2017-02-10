@@ -10,8 +10,10 @@ import { Globals } from './globals';
 			<a href="/"><img src="/resources/images/asterixdb_tm.png"></a>
 			<strong  class="current-location">
 				{{globals.selectedDataverse}} 
-				<span *ngIf="globals.selectedDataset">/</span> 
-				{{globals.selectedDataset}}
+				<span *ngIf="globals.selectedDataset"> 
+					<span>/</span> 
+					<span style="color:red;">{{globals.selectedDataset}}</span>
+				</span>
 			</strong>
 		</nav>
 

@@ -1,6 +1,5 @@
 <h2 *ngIf="data" >
-	{{datatype}}
-	(isOpen:<span style="color:red">{{isOpen}}</span>)
+	{{datatype}} (isOpen:<span style="color:red">{{isOpen}}</span>)
 </h2>
 
 <h1 *ngIf="!data && globals.selectedDataset">
@@ -28,5 +27,7 @@
 	</template>
 </p-dataTable>
 
-<h3>Nested DataTypes of {{datatype}}</h3>
-<pre [innerHTML]="nestedDatatypesDatas | prettyjson:3"></pre>
+<div *ngIf="nestedDatatypes.length > 0">
+	<h3>Nested DataTypes of {{datatype}}</h3>
+	<pre [innerHTML]="nestedDatatypesDatas | prettyjson:3"></pre>
+</div>
