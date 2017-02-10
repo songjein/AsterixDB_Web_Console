@@ -58,7 +58,7 @@ export class QueryComponent implements OnInit {
 	}
 	
 	onClick(){
-		this.browseComponent.browseForQueryTab(this.query);
+		this.browseComponent.browseForQueryTab(this.query.replace(/\n/g, " "));
 	}
 
 	ngOnInit(): void {
