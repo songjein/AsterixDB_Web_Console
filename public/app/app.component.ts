@@ -1,5 +1,8 @@
 import { Component } from '@angular/core';
 
+/**
+ * Defines our application's layout
+ */
 @Component({
 	selector: 'query-console',
 	template: `

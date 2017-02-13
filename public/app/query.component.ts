@@ -5,6 +5,11 @@ import { BrowseComponent } from './browse.component';
 
 import { Globals } from './globals';
 
+/**
+ * query component
+ * has editor (codemirror) for writing some query
+ */
+
 @Component({
 	moduleId: module.id,
 	selector: 'query-tab',

@@ -6,8 +6,8 @@ import { Router } from '@angular/router';
 import 'rxjs/add/operator/switchMap';
 
 /**
-* empty template for page refreshing !
-* ex) /proxy/browse => /browse
+* empty component for page refreshing !
+* ex) /proxy/browse => /proxy => /browse
 */
 @Component({
 	selector: 'proxy',

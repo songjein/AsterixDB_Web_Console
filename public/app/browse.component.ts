@@ -4,6 +4,11 @@ import { DataTableModule, SharedModule, ButtonModule, ToggleButtonModule } from 
 import { QueryService } from './query.service'; 
 import { Globals } from './globals';
 
+/*
+ * Browse function
+ * show data of given dataverse and dataset
+ */
+
 @Component({
 	moduleId: module.id,
 	selector: 'browse-tab',

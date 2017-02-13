@@ -7,7 +7,6 @@ var request = require('request');
 * root address => serving index.html file
 */
 router.get('/', function(req, res, next) {
-	//res.sendFile(path.join(__dirname, '../', 'views', 'index.html'));
 	res.sendFile('index.html');
 });
 

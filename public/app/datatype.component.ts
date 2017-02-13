@@ -5,6 +5,10 @@ import { QueryService } from './query.service';
 
 import { Globals } from './globals';
 
+/**
+ * Datatype-tab
+ * show datatype of given dataverse and dataset
+ */
 @Component({
 	moduleId: module.id, 
 	selector: 'datatype-tab',

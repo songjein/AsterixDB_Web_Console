@@ -6,6 +6,9 @@ import { QueryComponent } from './query.component';
 import { DatatypeComponent } from './datatype.component';
 import { ProxyComponent } from './proxy.component';
 
+/**
+ * Define routing information between components
+ */
 const routes: Routes = [
 	{ path: '', redirectTo: '/query', pathMatch: 'full' },
 	{ path: 'proxy/:target', component: ProxyComponent},
