@@ -1,5 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
-
+import { Component, OnInit, Input } from '@angular/core'; 
 import { DataTableModule, SharedModule, ButtonModule, ToggleButtonModule } from 'primeng/primeng'; 
 import { QueryService } from './query.service'; 
 import { Globals } from './globals';
@@ -42,6 +41,7 @@ export class BrowseComponent implements OnInit, OnDestroy {
 	 */
 	data: any[];
 	cols: any[] = [];
+	isFirstDataFetched: boolean;
 
 	// selected row (for row expansion function)
 	selectedRow: any;
@@ -54,10 +54,9 @@ export class BrowseComponent implements OnInit, OnDestroy {
 	
 	/**
 	 * Default browse function for browse-tab 
-	 * TODO: pagination using limit, offset 
 	 */
-	browse(): void {
-		this.cols = [];
+	browse(limit: number, offset: number): void {
+		if (!this.isFirstDataFetched) this.cols = [];
 
 		const dvName = this.globals.selectedDataverse;
 		const dsName = this.globals.selectedDataset;
@@ -69,18 +68,23 @@ export class BrowseComponent implements OnInit, OnDestroy {
 				`
 					use dataverse ${dvName};
 					for $ds in dataset ${dsName} 
-					limit 100 offset 0
+					limit ${limit} offset ${offset} 
 					return $ds;
 				`
 			)
 			.then(result => {
 				this.data = result;
+
+				// look up the first row data and build columns
 				const labels = Object.keys(result[0]);
-				for ( var i = 0; i < labels.length; i++ ) {
-					this.cols.push(
-						{ field: labels[i], header: labels[i] }
-					);
+				if (!this.isFirstDataFetched){
+					for ( var i = 0; i < labels.length; i++ ) {
+						this.cols.push(
+							{ field: labels[i], header: labels[i] }
+						);
+					}
 				}
+				if (!this.isFirstDataFetched) this.isFirstDataFetched = true;
 			});
 	}
 
@@ -123,12 +127,20 @@ export class BrowseComponent implements OnInit, OnDestroy {
 		}
 	}
 
+	/**
+	 * lazy load (get small chunk of data from database) 
+	 */
+	loadData(event){
+		this.browse(event.rows, event.first);
+	}
+
   /**
 	 * call browse() when this component loaded
 	 */
 	ngOnInit(): void {
+		this.isFirstDataFetched = false;
 		if (!this.isForQueryTab) {
-			this.browse();
+			this.browse(20, 0);
 		}
 	}
 }

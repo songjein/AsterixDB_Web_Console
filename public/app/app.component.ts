@@ -11,7 +11,7 @@ import { Component } from '@angular/core';
 		<div style="width:15%; float:left; padding-top: 50px;">
 			<sidebar></sidebar>
 		</div>
-		<div style="width:80%; float:left; overflow-y:auto; padding: 10px; ">
+		<div style="width:80%; float:left; overflow:auto; padding: 10px; ">
 			<tab-menu></tab-menu>
 			<div style="height:3px;"></div>
 			<router-outlet></router-outlet>
