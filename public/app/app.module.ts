@@ -30,7 +30,6 @@ import { DatatypeComponent } 	 from './datatype.component';
 import { ProxyComponent } 	 from './proxy.component';
 
 import { QueryService } from './query.service';
-import { KeysPipe } from './keys.pipe';
 
 import { AppRoutingModule } from './app-routing.module';
 
@@ -60,11 +59,10 @@ import { AppRoutingModule } from './app-routing.module';
 		QueryComponent,
 		DatatypeComponent,
 		CodemirrorComponent,
-		KeysPipe,
 	],
 
 	/**
-	* a singleton QueryService instance
+	* a singleton service instances
 	*/
 	providers: [
 		QueryService,

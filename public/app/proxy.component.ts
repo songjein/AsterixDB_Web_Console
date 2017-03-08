@@ -6,7 +6,7 @@ import { Router } from '@angular/router';
 import 'rxjs/add/operator/switchMap';
 
 /**
-* empty component for page refreshing !
+* empty component for page refreshing 
 * ex) /proxy/browse => /proxy => /browse
 */
 @Component({
@@ -23,7 +23,6 @@ export class ProxyComponent implements OnInit {
 		private route: ActivatedRoute,
 		private router: Router
 	) { }
-
 	
 	ngOnInit(): void {
 		this.route.params
@@ -34,7 +33,6 @@ export class ProxyComponent implements OnInit {
 				return target;
 			} )
 			.subscribe(target =>  {
-				// pass
 				// why looping..?
 				// ex) browser => b, r, o, w, e, r => error
 				// so, call router navigate in switchMap :'(

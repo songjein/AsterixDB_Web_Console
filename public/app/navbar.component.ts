@@ -2,6 +2,10 @@ import { Component } from '@angular/core';
 
 import { Globals } from './globals';
 
+/**
+ * navbar component
+ * shows selected dataverse & dataset
+ */
 @Component({
 	moduleId: module.id,
 	selector: 'navbar',

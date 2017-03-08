@@ -22,13 +22,17 @@ export class DatatypeComponent implements OnInit, OnDestroy {
 	datatype: string;
 	isOpen : boolean;
 
-	// needed for find the nested datatype
+	/**
+	 * needed for find the nested datatype
+	 */
 	MetadataDataset : any[];
 	MetadataDatatype : any[];
 	nestedDatatypes = [];
 	nestedDatatypesDatas = [];
 
-	// table data
+	/**
+	 * table data
+	 */
 	data: any[];
 	cols: any[] = [];
 
@@ -38,6 +42,9 @@ export class DatatypeComponent implements OnInit, OnDestroy {
 	) { }
 
 	
+	/**
+	 *  send query and get datatype information 
+	 */
 	browse(): void {
 		this.cols = [];
 
@@ -46,7 +53,6 @@ export class DatatypeComponent implements OnInit, OnDestroy {
 
 		if (!dvName && !dsName) return;
 
-		// first, find datatype
 		// first, find datatype
 		this.queryService
 			.getAQL(
@@ -68,7 +74,6 @@ export class DatatypeComponent implements OnInit, OnDestroy {
 			});
 
 		// next, find datatype in metadata
-		// next, find datatype in metadata
 		this.queryService
 			.getAQL(
 				`
@@ -86,7 +91,6 @@ export class DatatypeComponent implements OnInit, OnDestroy {
 						this.isOpen = record["IsOpen"];
 						this.data = record["Fields"];
 						
-						console.log("record", record["Fields"]);
 						const labels = Object.keys(record["Fields"][0]);
 						for (var j = 0 ; j < labels.length; j++){
 							this.cols.push(
@@ -96,11 +100,7 @@ export class DatatypeComponent implements OnInit, OnDestroy {
 					}
 				}
 				
-
-				/**
-				 * Find nested Datatype
-				 * Find nested Datatype
-				 */
+				// find nested data
 				for ( var k = 0 ; k < this.data.length; k++ ){
 					// current table's fields
 					const type = this.data[k]["FieldType"];
@@ -115,12 +115,13 @@ export class DatatypeComponent implements OnInit, OnDestroy {
 						}
 					}
 				}
-				console.log("nested datatype", this.nestedDatatypes);
-				console.log("nested datatype data", this.nestedDatatypesDatas);
 			});
 
 	}
 
+	/**
+	 * call browse() when this component loaded
+	 */
 	ngOnInit(): void {
 		this.browse();
 	}

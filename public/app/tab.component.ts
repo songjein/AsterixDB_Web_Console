@@ -6,6 +6,9 @@ import { Globals } from './globals';
 
 import { TabMenuModule, MenuItem } from 'primeng/primeng';
 
+/**
+ * tab component
+ */
 @Component({
 	moduleId: module.id,
 	selector: 'tab-menu',

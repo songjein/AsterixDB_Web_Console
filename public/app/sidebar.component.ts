@@ -6,6 +6,9 @@ import { PanelMenuModule,MenuItem } from 'primeng/primeng';
 import { QueryService } from './query.service'; 
 import { Globals } from './globals';
 
+/**
+ * sidebar component
+ */ 
 @Component({
 	moduleId: module.id,
 	selector: 'sidebar', 
@@ -16,6 +19,9 @@ import { Globals } from './globals';
 
 export class SidebarComponent implements OnInit{
 	
+	/**
+	 * menu items
+	 */
 	items: MenuItem[] = [];
 
 	constructor(
@@ -23,7 +29,10 @@ export class SidebarComponent implements OnInit{
 		private globals: Globals,
 		private queryService: QueryService	
 	){}
-	
+
+	/**
+	 * get all dataverses in the database
+	 */
 	getDataverse(): void {
 		this.queryService
 			.getAQL("for $ds in dataset Metadata.Dataverse return $ds;")
@@ -42,10 +51,14 @@ export class SidebarComponent implements OnInit{
 					);
 				}
 
+				// call getDataset() after getting the dataverses 
 				this.getDataset(); 
 			});
 	}
 
+	/**
+	 * get all datasets in the dataverse 
+	 */
 	getDataset(): void {
 		this.queryService
 			.getAQL("for $ds in dataset Metadata.Dataset return $ds;")
@@ -81,8 +94,10 @@ export class SidebarComponent implements OnInit{
 			});
 	}
 
+	/**
+	 * call getDataverse() when component is loaded
+	 */
 	ngOnInit(): void {
 		this.getDataverse();
 	}
-
 }

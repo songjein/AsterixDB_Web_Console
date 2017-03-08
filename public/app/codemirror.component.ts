@@ -4,15 +4,15 @@
  * component from "https://runkit.com/npm/ng2-codemirror"
  *                "https://www.npmjs.com/package/ng2-codemirror"
  * copy component from /src/codemirror.component.ts 
- * for custom mode (asterix aql, sql++ code hilighting)
+ * and modified for custom mode (asterix aql, sql++ code hilighting)
  * 
  * therefore, actually we don't need to "npm install ng2-codemirror"
  * 
  * Because on the outside of this component, 
- * It was really hard to access the codemirror instance that ng-codemirror use
+ * It was hard to access the codemirror instance that 'ng-codemirror' use
  * So, we copied the component in our application and modified it
  * 
- * "codemirror.js(^5.23.0)" is included in the "index.html"
+ * 'codemirror.js(^5.23.0)' is included in the 'index.html'
  * And in this component(codemirror.component.ts) 
  * add statement like "declare var CodeMirror: any;"
  *
@@ -24,7 +24,6 @@
  * ref 3) integrating :  https://medium.com/@s_eschweiler/using-external-libraries-with-angular-2-87e06db8e5d1#.8ok74uvwg
  */
 
-// Imports
 import {
   Component,
   Input,
@@ -36,7 +35,6 @@ import {
 } from '@angular/core';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
 
-//import * as CodeMirror from 'codemirror';
 declare var CodeMirror: any;
 
 /**
@@ -74,7 +72,6 @@ export class CodemirrorComponent {
   constructor(){
 		/**
 		 * Custom mode for AsterixDB
-		 *
 		 */
 		CodeMirror.defineMode("asterix-aql", function(){
 		  var KEYWORD_MATCH = [
@@ -92,7 +89,9 @@ export class CodemirrorComponent {
 				"let", "where", "order", "asc", "desc", "limit",
 				"keeping", "offset", "distinct", "or", "and",
 
-				// Built in functions (not yet)
+				// Built in functions (TODO)
+				// Built in functions (TODO)
+				// Built in functions (TODO)
 
 				// Asterix Data Model 
 				// Primitive type
@@ -116,7 +115,6 @@ export class CodemirrorComponent {
 			var SINGLE_QUOTE_MATCH = /['].*[']/;
 			var BREAK_POINT = /(\s)/;	
 
-			/////////////////////////////////////////////////////			
 			return {
 				startState: function() {return {inString: false};},
 				token: function(stream, state) {
@@ -155,7 +153,6 @@ export class CodemirrorComponent {
 					return null;
 				}
 			};
-			/////////////////////////////////////////////////////
 		});
 	}
 

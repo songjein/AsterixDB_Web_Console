@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 
 /**
+ * Root component
  * Defines our application's layout
  */
 @Component({

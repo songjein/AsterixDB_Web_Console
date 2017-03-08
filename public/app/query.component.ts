@@ -9,7 +9,6 @@ import { Globals } from './globals';
  * query component
  * has editor (codemirror) for writing some query
  */
-
 @Component({
 	moduleId: module.id,
 	selector: 'query-tab',
@@ -52,16 +51,19 @@ import { Globals } from './globals';
 export class QueryComponent implements OnInit {
 
 	@ViewChild(BrowseComponent) browseComponent: BrowseComponent
-
+	
+	// typed query
 	query: string; 
 
 	constructor(
 		private globals: Globals,
 		private queryService: QueryService
 	) { 
+		// mode config, codemirror
 		this.config = { mode: "asterix-aql", lineNumbers: true}	;
 	}
 	
+	// if click 'send query'
 	onClick(){
 		this.browseComponent.browseForQueryTab(this.query.replace(/\n/g, " "));
 	}
@@ -71,9 +73,8 @@ export class QueryComponent implements OnInit {
 	}
 
 	onFocus(){
-	
 	}
+
 	onBlur(){
-	
 	}
 }

@@ -1,14 +1,13 @@
-import { Component, OnInit, Input , OnDestroy } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 
 import { DataTableModule, SharedModule, ButtonModule, ToggleButtonModule } from 'primeng/primeng'; 
 import { QueryService } from './query.service'; 
 import { Globals } from './globals';
 
 /*
- * Browse function
+ * Browse component 
  * show data of given dataverse and dataset
  */
-
 @Component({
 	moduleId: module.id,
 	selector: 'browse-tab',
@@ -18,14 +17,17 @@ import { Globals } from './globals';
 })
 
 export class BrowseComponent implements OnInit, OnDestroy {
-	
 	/**
 	 * If this variable is set to true
 	 * ngInit do not call browse() function
 	 */
 	@Input()
 	isForQueryTab: boolean;
-	
+
+	/**
+	 * this component is also used in the query.component
+	 * so, set this variable to true, when this component is used in query.component
+	 */
 	isLoadingForQueryTab: boolean;
 
 	/**
@@ -41,6 +43,7 @@ export class BrowseComponent implements OnInit, OnDestroy {
 	data: any[];
 	cols: any[] = [];
 
+	// selected row (for row expansion function)
 	selectedRow: any;
 
 	constructor(
@@ -51,6 +54,7 @@ export class BrowseComponent implements OnInit, OnDestroy {
 	
 	/**
 	 * Default browse function for browse-tab 
+	 * TODO: pagination using limit, offset 
 	 */
 	browse(): void {
 		this.cols = [];
@@ -64,7 +68,9 @@ export class BrowseComponent implements OnInit, OnDestroy {
 			.getAQL(
 				`
 					use dataverse ${dvName};
-					for $ds in dataset ${dsName} return $ds;
+					for $ds in dataset ${dsName} 
+					limit 100 offset 0
+					return $ds;
 				`
 			)
 			.then(result => {
@@ -80,6 +86,7 @@ export class BrowseComponent implements OnInit, OnDestroy {
 
 	/**
 	 * Browse function for query-tab
+	 * TODO: pagination using limit, offset 
 	 */
 	browseForQueryTab(query: string): void {
 		this.isLoadingForQueryTab = true;
@@ -98,11 +105,16 @@ export class BrowseComponent implements OnInit, OnDestroy {
 			});
 	}
 
-
+	/**
+	 * function used in row expansion
+	 */
 	showDataInRow(d: any[]) {
 		this.selectedRow = d;
 	}
 
+	/**
+	 *  function for expansion button
+	 */
 	expandToggle(self){
 		const btns = document.getElementsByClassName('ui-row-toggler');
 
@@ -111,13 +123,12 @@ export class BrowseComponent implements OnInit, OnDestroy {
 		}
 	}
 
+  /**
+	 * call browse() when this component loaded
+	 */
 	ngOnInit(): void {
 		if (!this.isForQueryTab) {
 			this.browse();
 		}
-	}
-
-	ngOnDestroy(): void {
-		console.log('browse destroy');
 	}
 }
