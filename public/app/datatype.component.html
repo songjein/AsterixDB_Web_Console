@@ -14,7 +14,7 @@
 	Please select dataset
 </h1>
 
-<p-dataTable *ngIf="data" [value]="data" [rows]="10" [paginator]="true" [pageLinks]="10" [responsive]="true" >
+<p-dataTable *ngIf="data" [value]="data" [rows]="100" >
 	<p-column *ngFor="let col of cols" 
 		[field]="col.field" [header]="col.header"></p-column>
 	

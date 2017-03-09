@@ -140,7 +140,7 @@ export class BrowseComponent implements OnInit, OnDestroy {
 	ngOnInit(): void {
 		this.isFirstDataFetched = false;
 		if (!this.isForQueryTab) {
-			this.browse(20, 0);
+			this.browse(25, 0);
 		}
 	}
 }
