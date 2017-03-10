@@ -17,19 +17,6 @@ import { Globals } from './globals';
 
 export class BrowseComponent implements OnInit, OnDestroy {
 	/**
-	 * If this variable is set to true
-	 * ngInit do not call browse() function
-	 */
-	@Input()
-	isForQueryTab: boolean;
-
-	/**
-	 * this component is also used in the query.component
-	 * so, set this variable to true, when this component is used in query.component
-	 */
-	isLoadingForQueryTab: boolean;
-
-	/**
 	 * For toggler button ('Expnad All' / 'Collapse All')
 	 * - It is to make toggler button to 'on' status
 	 * - If you want to make it to 'off' status, change 'true' to 'false'
@@ -50,7 +37,6 @@ export class BrowseComponent implements OnInit, OnDestroy {
 		private globals: Globals,
 		private queryService: QueryService
 	) { }
-
 	
 	/**
 	 * Default browse function for browse-tab 
@@ -89,27 +75,6 @@ export class BrowseComponent implements OnInit, OnDestroy {
 	}
 
 	/**
-	 * Browse function for query-tab
-	 * TODO: pagination using limit, offset 
-	 */
-	browseForQueryTab(query: string): void {
-		this.isLoadingForQueryTab = true;
-		this.cols = [];
-		this.queryService
-			.getAQL(query)
-			.then(result => {
-				this.data = result;
-				const labels = Object.keys(result[0]);
-				for ( var i = 0; i < labels.length; i++ ) {
-					this.cols.push(
-						{ field: labels[i], header: labels[i] }
-					);
-				}
-				this.isLoadingForQueryTab = false;
-			});
-	}
-
-	/**
 	 * function used in row expansion
 	 */
 	showDataInRow(d: any[]) {
@@ -139,8 +104,6 @@ export class BrowseComponent implements OnInit, OnDestroy {
 	 */
 	ngOnInit(): void {
 		this.isFirstDataFetched = false;
-		if (!this.isForQueryTab) {
-			this.browse(25, 0);
-		}
+		this.browse(25, 0);
 	}
 }

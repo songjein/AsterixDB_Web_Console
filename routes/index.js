@@ -28,4 +28,20 @@ router.get('/query_aql', (req, res, next) => {
 	});
 });
 
+router.get('/query_sqlpp', (req, res, next) => {	
+	// this addr will be replaced with 'localhost'
+	var host = 'http://localhost:19002';
+	var path = '/query/sqlpp?query=';
+	var query = req.query.query
+
+	request({
+		url: host + path + query,	
+		json: true
+	}, function(error, response, body){
+		res.json(body);			
+	});
+});
+
+
+
 module.exports = router;

@@ -1,20 +1,16 @@
-<h2 *ngIf="!isForQueryTab">
-	{{globals.selectedDataset}}
+<h2>
+{{globals.selectedDataset}}
 </h2>
 
-<h1 *ngIf="!isForQueryTab && !data && globals.selectedDataset">
+<h1 *ngIf="!data && globals.selectedDataset">
 	Loading...
 </h1>
 
-<h1 *ngIf="isLoadingForQueryTab">
-	Loading...
-</h1>
-
-<h1 *ngIf="!isForQueryTab && !globals.selectedDataverse">
+<h1 *ngIf="!globals.selectedDataverse">
 	Empty Result, please select dataverse
 </h1>
 
-<h1 *ngIf="!isForQueryTab && !globals.selectedDataset">
+<h1 *ngIf="!globals.selectedDataset">
 	Please select dataset
 </h1>
 

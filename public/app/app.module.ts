@@ -12,6 +12,7 @@ import {
 	MenuItem,
 	ButtonModule,
 	ToggleButtonModule,
+	RadioButtonModule,
 } from 'primeng/primeng';
 
 import { CodemirrorComponent } from './codemirror.component';
@@ -47,6 +48,7 @@ import { AppRoutingModule } from './app-routing.module';
 		ButtonModule,
 		PrettyJsonModule,
 		ToggleButtonModule,
+		RadioButtonModule,
 	],
 
   declarations: [
