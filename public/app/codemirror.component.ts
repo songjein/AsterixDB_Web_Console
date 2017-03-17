@@ -73,7 +73,7 @@ export class CodemirrorComponent {
 		/**
 		 * Custom mode for AsterixDB
 		 */
-		CodeMirror.defineMode("asterix-aql", function(){
+		CodeMirror.defineMode("asterix", function(){
 		  var KEYWORD_MATCH = [
 				// AQL
 				"drop", "dataverse", "dataset", 
@@ -106,6 +106,12 @@ export class CodemirrorComponent {
 				"null", "missing",
 				// Derived type
 				// object {}, array [], multiset {{}}
+
+
+				// SQL++
+				"DROP", "DATAVERSE", "IF", "EXISTS", "CREATE", "USE", "TYPE", "AS", "DATASET", "PRIMARY", "KEY",
+				"INDEX", "SELECT", "VALUE", "INSERT", "INTO", "FROM", "WHERE", "AND", "SOME", "IN", "SATISFIES", "IS", "UNKNOWN", "NOT", "EVERY",
+				"GROUP", "BY", "ORDER", "DESC", "LIMIT", "OR", "SET", "DELETE", "LOAD", "USING",
 			];
 
 			//"(", ")","{{", "}}", "[", "]",	"{", "}",  ";", ",", ":","?", "=", 

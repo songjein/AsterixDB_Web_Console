@@ -89,7 +89,7 @@ export class QueryComponent implements OnInit {
 		private queryService: QueryService
 	) { 
 		// mode config, codemirror
-		this.config = { mode: "asterix-aql", lineNumbers: true}	;
+		this.config = { mode: "asterix", lineNumbers: true}	;
 	}
 
 	/**
