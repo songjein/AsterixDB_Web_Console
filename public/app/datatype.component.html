@@ -27,7 +27,20 @@
 	</template>
 </p-dataTable>
 
-<div *ngIf="nestedDatatypes.length > 0">
-	<h3>Nested DataTypes of {{datatype}}</h3>
-	<pre [innerHTML]="nestedDatatypesDatas | prettyjson:3"></pre>
+<div *ngFor="let ndata of nestedData; let i = index" >
+	<h3>{{nestedDatatypesDatas[i]["DatatypeName"]}}</h3>
+	<p-dataTable  [value]="ndata" [rows]="100" >
+		<p-column *ngFor="let col of cols" 
+			[field]="col.field" [header]="col.header"></p-column>
+		
+		<template let-d="rowData" >
+			<div class="ui-grid ui-grid-responsive ui-fluid" style="font-size:16px; padding: 20px">
+				<div class="ui-grid-row">
+					{{d}}
+				</div>
+			</div>
+		</template>
+	</p-dataTable>
 </div>
+
+
