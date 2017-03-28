@@ -52,6 +52,7 @@ export class BrowseComponent implements OnInit, OnDestroy {
 	 */
 	data: any[];
 	cols: any[] = [];
+	expansions: any[] = Array(25); 
 	isFirstDataFetched: boolean;
 
 	// selected row (for row expansion function)
@@ -89,9 +90,7 @@ export class BrowseComponent implements OnInit, OnDestroy {
 				const labels = Object.keys(result[0]);
 				if (!this.isFirstDataFetched){
 					for ( var i = 0; i < labels.length; i++ ) {
-						this.cols.push(
-							{ field: labels[i], header: labels[i] }
-						);
+						this.cols.push(	labels[i]	);
 					}
 				}
 				if (!this.isFirstDataFetched) this.isFirstDataFetched = true;
@@ -125,9 +124,14 @@ export class BrowseComponent implements OnInit, OnDestroy {
 
 	/**
 	 * click cell
+	 * row : selected row index
+	 * col : selected col indexj
 	 */
 	clickCell(row:number, col:number):void{
-		console.log(row, col);
+		const clickedData = this.data[row];
+		const clickedColumn = this.cols[col];
+		console.log(clickedData, clickedColumn);
+		this.expansions[row] = clickedData[clickedColumn];
 	}
 
   /**

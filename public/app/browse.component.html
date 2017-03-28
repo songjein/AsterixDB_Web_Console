@@ -17,7 +17,7 @@
 <table >
 	<tr>
 		<th *ngFor="let col of cols">
-			{{ col.field }}
+			{{ col }}
 		</th>
 	</tr>
 	<template ngFor let-d [ngForOf]="data" let-r="index" >
@@ -31,9 +31,9 @@
 				</span>
 			</td>
 		</tr>
-		<tr> 
+		<tr *ngIf="expansions[r]"> 
 			<td [attr.colspan]="100">
-				<pre [innerHTML]=" d | prettyjson:3"></pre>
+				<pre [innerHTML]=" expansions[r] | prettyjson:3"></pre>
 			</td>
 		</tr>
 	</template>
