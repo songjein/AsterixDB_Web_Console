@@ -14,6 +14,11 @@
 	Please select dataset
 </h1>
 
+<div class="page-label">pages: </div>
+<div class="page" *ngFor="let page of pages" (click)="getPageData(page)">{{page}}</div>
+<div class="page-label">next page</div>
+<div style="height:10px; clear:both"></div>
+
 <div id="browse-container">
 	<table>
 		<tr>

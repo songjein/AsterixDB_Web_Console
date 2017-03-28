@@ -13,7 +13,7 @@ import { Globals } from './globals';
 	templateUrl: 'browse.component.html',
 	styles: [`
 		#browse-container{
-			width: 100%; height: 777px; overflow-x:auto;
+			width: 100%; height: 700px; overflow-x:auto;
 		}
 		th {
 			height: 30px;
@@ -23,7 +23,7 @@ import { Globals } from './globals';
 
 		table, th, td {
 			border :1px solid black;	
-			padding: 5px;
+			padding: 2px 5px;
 			cursor: pointer;
 		}
 
@@ -40,28 +40,55 @@ import { Globals } from './globals';
 		table {
 			border-collapse : collapse;
 		}
+
+		.page-label{
+			float:left;
+			color: black;	
+			padding: 2px 3px;
+			margin: 0 3px;
+			cursor: pointer;
+			font-size: 1em;
+			background: orange;
+			border: 1px solid black;
+		}
+
+		.page{
+			float:left;
+			color: black;	
+			padding: 2px 3px;
+			margin: 0 3px;
+			cursor: pointer;
+			font-size: 1em;
+			background: yellow;
+			border: 1px solid black;
+		}
 	`]
 })
 
 export class BrowseComponent implements OnInit, OnDestroy {
-	/**
-	 * For toggler button ('Expnad All' / 'Collapse All')
-	 * - It is to make toggler button to 'on' status
-	 * - If you want to make it to 'off' status, change 'true' to 'false'
-	 */
-	toggler: boolean = true;
 
 	/**
 	 * data, cols will be injected to the table 
 	 */
+	allData: any[];
 	data: any[];
 	cols: any[] = [];
-	expansions: any[] = Array(25); 
-	expanded: boolean = false;
-	isFirstDataFetched: boolean;
 
-	// selected row (for row expansion function)
-	selectedRow: any;
+	/**
+	 * expansion status
+	 */
+	expansions: any[] = Array(25); // must be the same with the number of rows in a page
+	expanded: boolean = false;
+	firstFetched: boolean;
+
+	/**
+	 * data fetch offset
+	 */
+	offset: number = 0;
+	limit: number = 25;
+	fetchPageNum: number = 10; // size of fetching data = limit * fetchPageNum
+	currentPageNum: number = 1;
+	pages: number[] = [];
 
 	constructor(
 		private globals: Globals,
@@ -71,8 +98,8 @@ export class BrowseComponent implements OnInit, OnDestroy {
 	/**
 	 * Default browse function for browse-tab 
 	 */
-	browse(limit: number, offset: number): void {
-		if (!this.isFirstDataFetched) this.cols = [];
+	browse(offset: number): void {
+		if (!this.firstFetched) this.cols = [];
 
 		const dvName = this.globals.selectedDataverse;
 		const dsName = this.globals.selectedDataset;
@@ -84,17 +111,17 @@ export class BrowseComponent implements OnInit, OnDestroy {
 				`
 					use dataverse ${dvName};
 					for $ds in dataset ${dsName} 
-					limit ${limit} offset ${offset} 
+					limit ${this.limit * this.fetchPageNum} offset ${offset} 
 					return $ds;
 				`
 			)
 			.then(result => {
-				this.data = result;
+				this.allData = result;
 
-				// look up the first 10(+) rows data and build columns
+				// look up the number/2 of rows data and build columns
 				// make maximum length column 
-				if (!this.isFirstDataFetched){
-					for (let i = 0 ; i < result.length; i++){
+				if (!this.firstFetched){
+					for (let i = 0 ; i < result.length / 2; i++){
 						const keys = Object.keys(result[i]);	
 						for (let j = 0 ; j < keys.length; j++){
 							if (!this.cols.includes(keys[j])) this.cols.push(keys[j]);	
@@ -102,40 +129,39 @@ export class BrowseComponent implements OnInit, OnDestroy {
 					}
 				}
 				// make empty key (null value) for nullable data 
-				for (let i = 0 ; i < this.data.length; i++){
+				for (let i = 0 ; i < this.allData.length; i++){
 					for (let j = 0 ; j < this.cols.length; j++){
-						if (!(this.cols[j] in this.data[i])){
-							this.data[i][this.cols[j]] = "";	
+						if (!(this.cols[j] in this.allData[i])){
+							this.allData[i][this.cols[j]] = "";	
 						}
 					}	
 				}
-				if (!this.isFirstDataFetched) this.isFirstDataFetched = true;
+
+				// data for the first page
+				this.data = this.allData.slice(0, this.limit);
+				
+				// generate page number
+				for (let i = 0 ; i < this.fetchPageNum; i++){
+					this.pages.push(i + 1);
+				}
+
+				// will be removed
+				if (!this.firstFetched) this.firstFetched = true;
 			});
-	}
-
-	/**
-	 * function used in row expansion
-	 */
-	showDataInRow(d: any[]) {
-		this.selectedRow = d;
-	}
-
-	/**
-	 *  function for expansion button
-	 */
-	expandToggle(self){
-		const btns = document.getElementsByClassName('ui-row-toggler');
-
-		for (let btn of btns){
-			btn.click();	
-		}
 	}
 
 	/**
 	 * lazy load (get small chunk of data from database) 
 	 */
 	loadData(event){
-		this.browse(event.rows, event.first);
+		//this.browse(event.rows, event.first);
+	}
+
+	getPageData(pageNum: number){
+		this.data = []
+		const offset = this.limit * (pageNum - 1);
+		const limit = offset + this.limit;
+		this.data = this.allData.slice(offset, limit);
 	}
 
 	/**
@@ -165,6 +191,7 @@ export class BrowseComponent implements OnInit, OnDestroy {
 	 * expand all
 	 */
 	expandAll(col: string): void{
+		// if already expanded
 		if (this.expanded){
 			// make expansions array empty 	
 			for (let i = 0 ; i < this.data.length; i++){
@@ -185,7 +212,7 @@ export class BrowseComponent implements OnInit, OnDestroy {
 	 * call browse() when this component loaded
 	 */
 	ngOnInit(): void {
-		this.isFirstDataFetched = false;
-		this.browse(25, 0);
+		this.firstFetched = false;
+		this.browse(this.offset);
 	}
 }
