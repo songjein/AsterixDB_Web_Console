@@ -25,6 +25,11 @@ import { Globals } from './globals';
 		table, th, td {
 			border :1px solid black;	
 			padding: 5px;
+			cursor: pointer;
+		}
+
+		th:hover{
+			background: orange;	
 		}
 
 		td:hover{
@@ -53,6 +58,7 @@ export class BrowseComponent implements OnInit, OnDestroy {
 	data: any[];
 	cols: any[] = [];
 	expansions: any[] = Array(25); 
+	expanded: boolean = false;
 	isFirstDataFetched: boolean;
 
 	// selected row (for row expansion function)
@@ -127,11 +133,35 @@ export class BrowseComponent implements OnInit, OnDestroy {
 	 * row : selected row index
 	 * col : selected col indexj
 	 */
-	clickCell(row:number, col:number):void{
+	clickCell(row:number, col:number, off: boolean):void{
+		if (off){
+			this.expansions[row] = null; 
+			return;
+		}
 		const clickedData = this.data[row];
 		const clickedColumn = this.cols[col];
 		console.log(clickedData, clickedColumn);
 		this.expansions[row] = clickedData[clickedColumn];
+	}
+
+	/**
+	 * expand all
+	 */
+	expandAll(col: string): void{
+		if (this.expanded){
+			// make expansions array empty 	
+			for (let i = 0 ; i < this.data.length; i++){
+				this.expansions[i] = null;
+			}
+			this.expanded= false;
+			return;	
+		}
+
+		// expand all
+		this.expanded= true;
+		for (let i = 0 ; i < this.data.length; i++){
+			this.expansions[i] = this.data[i][col];
+		}
 	}
 
   /**

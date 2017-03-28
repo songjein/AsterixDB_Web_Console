@@ -16,7 +16,7 @@
 
 <table >
 	<tr>
-		<th *ngFor="let col of cols">
+		<th *ngFor="let col of cols" (click)="expandAll(col)">
 			{{ col }}
 		</th>
 	</tr>
@@ -32,7 +32,7 @@
 			</td>
 		</tr>
 		<tr *ngIf="expansions[r]"> 
-			<td [attr.colspan]="100">
+			<td [attr.colspan]="100" (click)="clickCell(r,c,true)">
 				<pre [innerHTML]=" expansions[r] | prettyjson:3"></pre>
 			</td>
 		</tr>
