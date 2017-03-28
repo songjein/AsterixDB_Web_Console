@@ -12,10 +12,9 @@ import { Globals } from './globals';
 	selector: 'browse-tab',
 	templateUrl: 'browse.component.html',
 	styles: [`
-		table {
-			width 100%;	
+		#browse-container{
+			width: 100%; height: 777px; overflow-x:auto;
 		}
-
 		th {
 			height: 30px;
 			background: rgb(222,222,222);
@@ -92,12 +91,23 @@ export class BrowseComponent implements OnInit, OnDestroy {
 			.then(result => {
 				this.data = result;
 
-				// look up the first row data and build columns
-				const labels = Object.keys(result[0]);
+				// look up the first 10(+) rows data and build columns
+				// make maximum length column 
 				if (!this.isFirstDataFetched){
-					for ( var i = 0; i < labels.length; i++ ) {
-						this.cols.push(	labels[i]	);
+					for (let i = 0 ; i < result.length; i++){
+						const keys = Object.keys(result[i]);	
+						for (let j = 0 ; j < keys.length; j++){
+							if (!this.cols.includes(keys[j])) this.cols.push(keys[j]);	
+						}
 					}
+				}
+				// make empty key (null value) for nullable data 
+				for (let i = 0 ; i < this.data.length; i++){
+					for (let j = 0 ; j < this.cols.length; j++){
+						if (!(this.cols[j] in this.data[i])){
+							this.data[i][this.cols[j]] = "";	
+						}
+					}	
 				}
 				if (!this.isFirstDataFetched) this.isFirstDataFetched = true;
 			});
@@ -133,14 +143,21 @@ export class BrowseComponent implements OnInit, OnDestroy {
 	 * row : selected row index
 	 * col : selected col indexj
 	 */
-	clickCell(row:number, col:number, off: boolean):void{
+	expandCell(row:number, col:number, off: boolean):void{
 		if (off){
 			this.expansions[row] = null; 
 			return;
 		}
+		
 		const clickedData = this.data[row];
 		const clickedColumn = this.cols[col];
-		console.log(clickedData, clickedColumn);
+
+		// if user clicked same cell
+		if (this.expansions[row] == clickedData[clickedColumn]) {
+			this.expansions[row] = null; 
+			return;
+		}
+
 		this.expansions[row] = clickedData[clickedColumn];
 	}
 

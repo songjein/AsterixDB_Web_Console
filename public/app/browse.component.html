@@ -14,27 +14,40 @@
 	Please select dataset
 </h1>
 
-<table >
-	<tr>
-		<th *ngFor="let col of cols" (click)="expandAll(col)">
-			{{ col }}
-		</th>
-	</tr>
-	<template ngFor let-d [ngForOf]="data" let-r="index" >
-		<tr class="row">
-			<td *ngFor="let k of d | keys; let c=index" (click)="clickCell(r,c)">
-				<span *ngIf="d[k] | isObject">
-					<b>Nested Data</b>
-				</span>
-				<span *ngIf="!(d[k] | isObject)">
-					{{ d[k] }}
-				</span>
-			</td>
+<div id="browse-container">
+	<table>
+		<tr>
+			<th *ngFor="let col of cols" (click)="expandAll(col)">
+				{{ col }}
+			</th>
 		</tr>
-		<tr *ngIf="expansions[r]"> 
-			<td [attr.colspan]="100" (click)="clickCell(r,c,true)">
-				<pre [innerHTML]=" expansions[r] | prettyjson:3"></pre>
-			</td>
-		</tr>
-	</template>
-</table>
+		<template ngFor let-d [ngForOf]="data" let-r="index" >
+			<tr class="row">
+				<td *ngFor="let k of cols; let c=index" (click)="expandCell(r,c)">
+					<!-- nested data-->
+					<span *ngIf="d[k] | isObject">
+						<b>Nested Data</b>
+					</span>
+					<!-- array of nested data-->
+					<span *ngIf="d[k] | isObjectArray">
+						[
+							<span *ngFor="let item of d[k]; let i = index">
+								<span *ngIf="i > 0">,</span>
+								<b>Nested Data</b>
+							</span>
+						]
+					</span>
+					<!-- plain data -->
+					<span *ngIf="!(d[k] | isObject) && !(d[k] | isObjectArray)">
+						{{ d[k] }}
+					</span>
+				</td>
+			</tr>
+			<tr *ngIf="expansions[r]"> 
+				<td [attr.colspan]="100" (click)="expandCell(r,c,true)">
+					<pre [innerHTML]=" expansions[r] | prettyjson:3"></pre>
+				</td>
+			</tr>
+		</template>
+	</table>
+</div>
