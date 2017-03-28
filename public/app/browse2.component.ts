@@ -12,30 +12,6 @@ import { Globals } from './globals';
 	selector: 'browse-tab',
 	templateUrl: 'browse.component.html',
 	styles: [`
-		table {
-			width 100%;	
-		}
-
-		th {
-			height: 30px;
-			background: rgb(222,222,222);
-			color: black;
-		}
-
-		table, th, td {
-			border :1px solid black;	
-			padding: 5px;
-		}
-
-		td:hover{
-			background: yellow;	
-		}
-
-		.row:nth-child(odd) {background: rgb(245,245,245)}
-
-		table {
-			border-collapse : collapse;
-		}
 	`]
 })
 
@@ -121,13 +97,6 @@ export class BrowseComponent implements OnInit, OnDestroy {
 	 */
 	loadData(event){
 		this.browse(event.rows, event.first);
-	}
-
-	/**
-	 * click cell
-	 */
-	clickCell(row:number, col:number):void{
-		console.log(row, col);
 	}
 
   /**

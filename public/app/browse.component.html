@@ -14,26 +14,27 @@
 	Please select dataset
 </h1>
 
-
-<p-dataTable #dt *ngIf="data" [value]="data" expandableRows="true" [rows]="25" 
-	[paginator]="true" [pageLinks]="10" [lazy]="true" (onLazyLoad)="loadData($event)" 
-	exportFilename="data" [resizableColumns]="true" [totalRecords]="1000">
-
-	<p-header>
-		<div class="ui-helper-clearfix">
-			<button type="button" pButton icon="fa-file-o" iconPos="left" label="CSV" (click)="dt.exportCSV()" style="float:right; margin-left: 5px;"></button>
-			<p-toggleButton [(ngModel)]="toggler" onLabel="Expand All" offLabel="Collapse All" onIcon="fa-expand" offIcon="fa-compress" (onChange)="expandToggle($event)"></p-toggleButton>
-		</div>
-	</p-header>
-
-	<p-column expander="true" [style]="{ width: '30px'}" styleClass="col-icon"></p-column>
-
-	<p-column *ngFor="let col of cols" 
-		[field]="col.field" [header]="col.header"></p-column>
-	
-	<template let-d pTemplate="rowexpansion">
-		<div class="ui-grid ui-grid-responsive ui-fluid" style="font-size:16px; padding: 20px">
-			<pre [innerHTML]=" d | prettyjson:3"></pre>
-		</div>
+<table >
+	<tr>
+		<th *ngFor="let col of cols">
+			{{ col.field }}
+		</th>
+	</tr>
+	<template ngFor let-d [ngForOf]="data" let-r="index" >
+		<tr class="row">
+			<td *ngFor="let k of d | keys; let c=index" (click)="clickCell(r,c)">
+				<span *ngIf="d[k] | isObject">
+					<b>Nested Data</b>
+				</span>
+				<span *ngIf="!(d[k] | isObject)">
+					{{ d[k] }}
+				</span>
+			</td>
+		</tr>
+		<tr> 
+			<td [attr.colspan]="100">
+				<pre [innerHTML]=" d | prettyjson:3"></pre>
+			</td>
+		</tr>
 	</template>
-</p-dataTable>
+</table>

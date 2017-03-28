@@ -34,6 +34,9 @@ import { QueryService } from './query.service';
 
 import { AppRoutingModule } from './app-routing.module';
 
+import { KeysPipe } from './keys.pipe'
+import { ObjectTypePipe } from './objecttype.pipe'
+
 @NgModule({
   imports: [ 
 		BrowserModule, 
@@ -61,6 +64,8 @@ import { AppRoutingModule } from './app-routing.module';
 		QueryComponent,
 		DatatypeComponent,
 		CodemirrorComponent,
+		KeysPipe,
+		ObjectTypePipe
 	],
 
 	/**
