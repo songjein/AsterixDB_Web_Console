@@ -45,26 +45,38 @@ import { Globals } from './globals';
 			border-collapse : collapse;
 		}
 
+		.pagination {
+			display: inline-block;
+		}
+
+		.pagination div {
+			color: black;
+			float: left;
+			padding: 8px 16px;
+			text-decoration: none;
+		}
+
+		.page {
+			cursor: pointer;
+		}
+
+		.pagination div:hover:not(.active) {
+			background-color: #ddd;
+			border-radious: 5px;
+		}
+
+		.pagination.page:active {
+			background-color: #4CAF50;
+			color: white;
+			border-radious: 5px;
+		}
+
 		.page-label{
 			float:left;
 			color: black;	
 			padding: 2px 3px;
 			margin: 0 3px;
 			cursor: pointer;
-			/*
-			background: orange;
-			border: 1px solid black;
-			*/
-		}
-
-		.page{
-			float:left;
-			color: black;	
-			padding: 2px 3px;
-			margin: 0 3px;
-			cursor: pointer;
-			background: yellow;
-			border: 1px solid black;
 		}
 	`]
 })

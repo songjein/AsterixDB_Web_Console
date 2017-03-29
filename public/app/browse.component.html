@@ -14,16 +14,17 @@
 	Please select dataset
 </h1>
 
-<div class="page-label" style="background:white">pages: </div>
-<div class="page-label" *ngIf="chunkNum > 1" (click)="getPrevChunk()">
-	<i class="fa fa-chevron-circle-left" aria-hidden="true"></i>
-</div>
-<div class="page" *ngFor="let page of pages" (click)="getPageData(page)">{{page}}</div>
-<div class="page-label" (click)="getNextChunk()">
-	<i class="fa fa-chevron-circle-right" aria-hidden="true"></i>
-</div>
-<div class="page-label" *ngIf="isLoading">
-	<i class="fa fa-spinner" aria-hidden="true"></i>
+<div class="pagination">
+	<div class="page-label" *ngIf="chunkNum > 1" (click)="getPrevChunk()">
+		<i class="fa fa-chevron-circle-left" aria-hidden="true"></i>
+	</div>
+	<div class="page" *ngFor="let page of pages" (click)="getPageData(page)">{{page}}</div>
+	<div class="page-label" (click)="getNextChunk()">
+		<i class="fa fa-chevron-circle-right" aria-hidden="true"></i>
+	</div>
+	<div class="page-label" *ngIf="isLoading">
+		<i class="fa fa-spinner fa-pulse fa-1x fa-fw" aria-hidden="true"></i>
+	</div>
 </div>
 <div style="height:10px; clear:both"></div>
 
