@@ -13,33 +13,7 @@ import { Globals } from './globals';
 	moduleId: module.id, 
 	selector: 'datatype-tab',
 	templateUrl: 'datatype.component.html',
-	styles: [`
-		th {
-			height: 30px;
-			background: rgb(222,222,222);
-			color: black;
-		}
-
-		table, th, td {
-			border :1px solid black;	
-		}
-
-		td {
-			min-width: 250px;	
-			padding: 5px 10px;
-			cursor: pointer;
-		}
-
-		tr:hover td{
-			background: yellow;	
-		}
-
-		.row:nth-child(odd) {background: rgb(245,245,245)}
-
-		table {
-			border-collapse : collapse;
-		}
-	`]
+	styleUrls: ['datatype.component.css']
 })
 
 export class DatatypeComponent implements OnInit, OnDestroy {

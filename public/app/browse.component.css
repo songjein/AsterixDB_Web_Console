@@ -1,0 +1,66 @@
+#browse-container{
+	width: 100%; height: 700px; overflow-x:auto;
+}
+th {
+	height: 30px;
+	background: rgb(222,222,222);
+	color: black;
+}
+
+table, th, td {
+	border :1px solid black;	
+	padding: 2px 5px;
+	cursor: pointer;
+}
+
+td{
+	padding: 5px 10px;
+}
+
+th:hover{
+	background: orange;	
+}
+
+td:hover{
+	background: yellow;	
+}
+
+.row:nth-child(odd) {background: rgb(245,245,245)}
+
+table {
+	border-collapse : collapse;
+}
+
+.pagination {
+	display: inline-block;
+}
+
+.pagination div {
+	color: black;
+	float: left;
+	padding: 4px 6px;
+	text-decoration: none;
+}
+
+.page {
+	cursor: pointer;
+}
+
+.pagination div:hover:not(.active) {
+	background-color: #ddd;
+	border-radious: 5px;
+}
+
+.pagination.page:active {
+	background-color: #4CAF50;
+	color: white;
+	border-radious: 5px;
+}
+
+.page-label{
+	float:left;
+	color: black;	
+	padding: 2px 3px;
+	margin: 0 3px;
+	cursor: pointer;
+}
