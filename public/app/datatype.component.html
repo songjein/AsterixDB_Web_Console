@@ -14,33 +14,39 @@
 	Please select dataset
 </h1>
 
-<p-dataTable *ngIf="data" [value]="data" [rows]="100" >
-	<p-column *ngFor="let col of cols" 
-		[field]="col.field" [header]="col.header"></p-column>
-	
-	<template let-d="rowData" >
-		<div class="ui-grid ui-grid-responsive ui-fluid" style="font-size:16px; padding: 20px">
-			<div class="ui-grid-row">
-				{{d}}
-			</div>
-		</div>
+<table>
+	<tr>
+		<th *ngFor="let col of cols">
+			{{ col}}
+		</th>
+	</tr>
+	<template ngFor let-d [ngForOf]="data" let-r="index" >
+		<tr class="row">
+			<td *ngFor="let k of cols; let c=index" (click)="selectNestedType(d[k])">
+				{{ d[k] }}
+			</td>
+		</tr>
 	</template>
-</p-dataTable>
+</table>
 
 <div *ngFor="let ndata of nestedData; let i = index" >
-	<h3>{{nestedDatatypesDatas[i]["DatatypeName"]}}</h3>
-	<p-dataTable  [value]="ndata" [rows]="100" >
-		<p-column *ngFor="let col of cols" 
-			[field]="col.field" [header]="col.header"></p-column>
-		
-		<template let-d="rowData" >
-			<div class="ui-grid ui-grid-responsive ui-fluid" style="font-size:16px; padding: 20px">
-				<div class="ui-grid-row">
-					{{d}}
-				</div>
-			</div>
-		</template>
-	</p-dataTable>
+	<div *ngIf='selectedNestedDatatype == nestedDatatypesDatas[i]["DatatypeName"]'>
+		<h3>{{selectedNestedDatatype}}</h3>
+		<table>
+			<tr>
+				<th *ngFor="let col of cols">
+					{{ col }}
+				</th>
+			</tr>
+			<template ngFor let-d [ngForOf]="ndata" let-r="index" >
+				<tr class="row">
+					<td *ngFor="let k of cols; let c=index">
+						{{ d[k] }}
+					</td>
+				</tr>
+			</template>
+		</table>
+	</div>
 </div>
 
 

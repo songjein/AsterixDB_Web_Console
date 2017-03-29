@@ -27,6 +27,10 @@ import { Globals } from './globals';
 			cursor: pointer;
 		}
 
+		td{
+			padding: 5px 10px;
+		}
+
 		th:hover{
 			background: orange;	
 		}
@@ -47,7 +51,6 @@ import { Globals } from './globals';
 			padding: 2px 3px;
 			margin: 0 3px;
 			cursor: pointer;
-			font-size: 1em;
 			background: orange;
 			border: 1px solid black;
 		}
@@ -58,7 +61,6 @@ import { Globals } from './globals';
 			padding: 2px 3px;
 			margin: 0 3px;
 			cursor: pointer;
-			font-size: 1em;
 			background: yellow;
 			border: 1px solid black;
 		}

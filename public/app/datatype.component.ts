@@ -14,6 +14,31 @@ import { Globals } from './globals';
 	selector: 'datatype-tab',
 	templateUrl: 'datatype.component.html',
 	styles: [`
+		th {
+			height: 30px;
+			background: rgb(222,222,222);
+			color: black;
+		}
+
+		table, th, td {
+			border :1px solid black;	
+		}
+
+		td {
+			min-width: 250px;	
+			padding: 5px 10px;
+			cursor: pointer;
+		}
+
+		tr:hover td{
+			background: yellow;	
+		}
+
+		.row:nth-child(odd) {background: rgb(245,245,245)}
+
+		table {
+			border-collapse : collapse;
+		}
 	`]
 })
 
@@ -43,6 +68,7 @@ export class DatatypeComponent implements OnInit, OnDestroy {
 	 */
 	nestedData: any[] = [];
 	nestedCols: any[] = [];
+	selectedNestedDatatype: string = "";
 
 	constructor(
 		private globals: Globals,
@@ -160,9 +186,7 @@ export class DatatypeComponent implements OnInit, OnDestroy {
 			let cols = [];
 			const labels = Object.keys(record["Fields"][0]);
 			for (var j = 0 ; j < labels.length; j++){
-				cols.push(
-					{ field: labels[j], header: labels[j] }
-				);	
+				cols.push(labels[j]);
 			}
 			this.nestedData.push(data); 
 			this.nestedCols.push(cols); 
@@ -234,9 +258,7 @@ export class DatatypeComponent implements OnInit, OnDestroy {
 						// predict columns name using first row's columns
 						const labels = Object.keys(record["Fields"][0]);
 						for (var j = 0 ; j < labels.length; j++){
-							this.cols.push(
-								{ field: labels[j], header: labels[j] }
-							);	
+							this.cols.push(labels[j]);
 						}
 					}
 				}
@@ -260,6 +282,13 @@ export class DatatypeComponent implements OnInit, OnDestroy {
 		this.getDatatypes();
 
 	}
+
+	/**
+	 * when user click nested data type
+	 */
+	selectNestedType(datatype:string):void{
+		this.selectedNestedDatatype = datatype;
+	}	
 
 	/**
 	 * call getData() when this component loaded
