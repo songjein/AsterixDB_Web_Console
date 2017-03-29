@@ -98,9 +98,9 @@ export class BrowseComponent implements OnInit, OnDestroy {
 	) { }
 	
 	/**
-	 * Default browse function for browse-tab 
+	 * get chunk from the database 
 	 */
-	browse(offset: number): void {
+	getChunk(offset: number): void {
 		if (!this.firstFetched) this.cols = [];
 
 		const dvName = this.globals.selectedDataverse;
@@ -173,7 +173,7 @@ export class BrowseComponent implements OnInit, OnDestroy {
 	 * when click the next page button, get the next chunk from the database
 	 */
 	getNextChunk(){
-		this.browse(this.limit * this.chunkNum * this.fetchPageNum);
+		this.getChunk(this.limit * this.chunkNum * this.fetchPageNum);
 		this.chunkNum ++;
 	}
 
@@ -181,7 +181,7 @@ export class BrowseComponent implements OnInit, OnDestroy {
 	 * when click the prev page button, get the previous chunk from the database
 	 */
 	getPrevChunk(){
-		this.browse(this.limit * (this.chunkNum - 2) * this.fetchPageNum;
+		this.getChunk(this.limit * (this.chunkNum - 2) * this.fetchPageNum;
 		this.chunkNum --;
 	}
 
@@ -230,10 +230,10 @@ export class BrowseComponent implements OnInit, OnDestroy {
 	}
 
   /**
-	 * call browse() when this component loaded
+	 * call getChunk() when this component loaded
 	 */
 	ngOnInit(): void {
 		this.firstFetched = false;
-		this.browse(this.offset);
+		this.getChunk(this.offset);
 	}
 }

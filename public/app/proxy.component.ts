@@ -27,7 +27,6 @@ export class ProxyComponent implements OnInit {
 	ngOnInit(): void {
 		this.route.params
 			.switchMap((params: Params) => { 
-				console.log('target', params['target']);
 				var target = params['target'];
 				this.router.navigate(["/" + target]);
 				return target;

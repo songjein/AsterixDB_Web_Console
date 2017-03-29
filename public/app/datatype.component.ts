@@ -51,7 +51,7 @@ export class DatatypeComponent implements OnInit, OnDestroy {
 	
 
 	/**
-	 * this function called in browse()
+	 * this function called in getData()
 	 * query result contains 
 	 * => DataverseName, DatasetName, DataverseName, DatatypeName 
 	 * 
@@ -99,7 +99,6 @@ export class DatatypeComponent implements OnInit, OnDestroy {
 			for (let k = 0 ; k < this.MetadataDatatype.length; k ++){
 				const mtdt = this.MetadataDatatype[k];
 				if (mtdt["DataverseName"] == dvName && mtdt["DatatypeName"] == nestedType["FieldType"]){
-					console.log(mtdt);		
 					const tag = mtdt["Derived"]["Tag"];
 					let updatedValue = "";
 					let specialCase = false;
@@ -134,6 +133,8 @@ export class DatatypeComponent implements OnInit, OnDestroy {
 		const dvName = this.globals.selectedDataverse;
 		const dsName = this.globals.selectedDataset;
 
+		if (!this.data) return;
+
 		for ( var i = 0 ; i < this.data.length; i++ ){
 			// current table's fields
 			const type = this.data[i]["FieldType"];
@@ -149,7 +150,6 @@ export class DatatypeComponent implements OnInit, OnDestroy {
 		}
 		
 		for ( let i = 0 ; i < this.nestedDatatypesDatas.length; i++){
-			console.log("size", this.nestedDatatypesDatas.length);
 			const record = this.nestedDatatypesDatas[i]["Derived"]["Record"];	
 			const data = record["Fields"];
 			
@@ -244,7 +244,7 @@ export class DatatypeComponent implements OnInit, OnDestroy {
 	/**
 	 *  send query and get datatype information 
 	 */
-	browse(): void {
+	getData(): void {
 		this.cols = [];
 
 		const dvName = this.globals.selectedDataverse;
@@ -261,10 +261,10 @@ export class DatatypeComponent implements OnInit, OnDestroy {
 	}
 
 	/**
-	 * call browse() when this component loaded
+	 * call getData() when this component loaded
 	 */
 	ngOnInit(): void {
-		this.browse();
+		this.getData();
 	}
 
 	ngOnDestroy(): void {
