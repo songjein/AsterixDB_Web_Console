@@ -80,6 +80,7 @@ export class QueryComponent implements OnInit {
 				});
 		}
 		else if (this.querytype == "aql_ddl"){ 
+			this.pages = [];
 			this.queryService
 				.sendDDL_AQL(query)
 				.then(result => {
@@ -87,6 +88,7 @@ export class QueryComponent implements OnInit {
 				});
 		}
 		else if (this.querytype == "sqlpp_ddl"){ 
+			this.pages = [];
 			this.queryService
 				.sendDDL_SQL(query)
 				.then(result => {

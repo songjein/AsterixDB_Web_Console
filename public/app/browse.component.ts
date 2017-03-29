@@ -28,6 +28,7 @@ export class BrowseComponent implements OnInit, OnDestroy {
 	 */
 	expansions: any[] = Array(25); // must be the same with the number of rows in a page
 	expanded: boolean = false;
+	lastSelectedColumn: number;
 	firstFetched: boolean;
 
 	/**
@@ -111,6 +112,11 @@ export class BrowseComponent implements OnInit, OnDestroy {
 	 * when click the page number, slice this.allData into this.data
 	 */
 	getPageData(pageNum: number){
+		// move page when the all items are expanded => refresh expanded area
+		if (this.expanded){
+			this.expandAll(this.lastSelectedColumn, true);	
+		}
+
 		this.data = []
 		pageNum = pageNum - ((this.chunkNum - 1) * this.fetchPageNum);
 		const offset = this.limit * (pageNum - 1);
@@ -159,10 +165,12 @@ export class BrowseComponent implements OnInit, OnDestroy {
 
 	/**
 	 * expand all
+	 * col : selected column
+	 * changePage : if user change page after expanding all items, use this value for refresh expanded area
 	 */
-	expandAll(col: string): void{
+	expandAll(col: string, changePage: boolean): void{
 		// if already expanded
-		if (this.expanded){
+		if (!changePage && this.expanded){
 			// make expansions array empty 	
 			for (let i = 0 ; i < this.data.length; i++){
 				this.expansions[i] = null;
@@ -170,6 +178,9 @@ export class BrowseComponent implements OnInit, OnDestroy {
 			this.expanded= false;
 			return;	
 		}
+		
+		// will be used move page when expanded all, to refresh expended area
+		this.lastSelectedColumn = col;
 
 		// expand all
 		this.expanded= true;
