@@ -28,6 +28,9 @@
 				{{ col }}
 			</th>
 		</tr>
+		<tr *ngIf="data && data.length == 0">
+			<td colspan="100">Empty</td>
+		</tr>
 		<template ngFor let-d [ngForOf]="data" let-r="index" >
 			<tr class="row">
 				<td *ngFor="let k of cols; let c=index" (click)="expandCell(r,c)">
