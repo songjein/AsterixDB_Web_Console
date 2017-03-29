@@ -40,6 +40,30 @@ router.get('/query_sqlpp', (req, res, next) => {
 	});
 });
 
+router.get('/ddl_aql', (req, res, next) => {	
+	var host = 'http://localhost:19002';
+	var path = '/ddl?ddl=';
+	var query = req.query.ddl
+
+	request({
+		url: host + path + query,	
+	}, function(error, response, body){
+		res.send(response.statusCode);			
+	});
+});
+
+router.get('/ddl_sql', (req, res, next) => {	
+	var host = 'http://localhost:19002';
+	var path = '/ddl/sqlpp?ddl=';
+	var query = req.query.ddl
+
+	request({
+		url: host + path + query,	
+	}, function(error, response, body){
+		res.send(response.statusCode);			
+	});
+});
+
 
 
 module.exports = router;

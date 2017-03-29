@@ -12,77 +12,38 @@ import { Globals } from './globals';
 @Component({
 	moduleId: module.id,
 	selector: 'query-tab',
-	template: `
-		<div style="width:95%; overflow-y:auto; padding: 10px; ">
-			<strong>mode : </strong>
-			<p-radioButton name="group1" value="sqlpp" label="SQL++" [(ngModel)]="querytype"></p-radioButton>,
-			<p-radioButton name="group1" value="aql" label="AQL" [(ngModel)]="querytype"></p-radioButton>
-
-			<div style="height:10px;"></div>
-
-			<codemirror [(ngModel)]="query"
-				[config]="config">
-			</codemirror>
-
-			<button id="sendQuery" (click)="onClick()">SendQuery</button>
-
-			<div style="clear:both;"></div>
-		</div>
-
-
-		<p-dataTable #dt *ngIf="data" [value]="data" expandableRows="true" [rows]="25" 
-			[paginator]="true" [pageLinks]="10" exportFilename="data" [resizableColumns]="true">
-
-			<p-header>
-				<div class="ui-helper-clearfix">
-					<button type="button" pButton icon="fa-file-o" iconPos="left" label="CSV" (click)="dt.exportCSV()" style="float:right; margin-left: 5px;"></button>
-					<p-toggleButton [(ngModel)]="toggler" onLabel="Expand All" offLabel="Collapse All" onIcon="fa-expand" offIcon="fa-compress" (onChange)="expandToggle($event)"></p-toggleButton>
-				</div>
-			</p-header>
-
-			<p-column expander="true" [style]="{ width: '30px'}" styleClass="col-icon"></p-column>
-
-			<p-column *ngFor="let col of cols" 
-				[field]="col.field" [header]="col.header"></p-column>
-			
-			<template let-d pTemplate="rowexpansion">
-				<div class="ui-grid ui-grid-responsive ui-fluid" style="font-size:16px; padding: 20px">
-					<pre [innerHTML]=" d | prettyjson:3"></pre>
-				</div>
-			</template>
-		</p-dataTable>
-	`,
-	styles: [`
-		#sendQuery {
-			float: right;
-			font-family: Arial;
-			background-color: #eee;
-			padding: 5px 10px;
-			border-radius: 4px;
-			margin-top: 10px;
-			margin-bottom: 20px;
-		}
-	`]
+	templateUrl:'query.component.html',
+	styleUrls: ['query.component.css']
 })
 
 export class QueryComponent implements OnInit {
 
-	@ViewChild(BrowseComponent) browseComponent: BrowseComponent
-	
 	// typed query
 	query: string; 
 	
 	// query-type
-	querytype: string = "sqlpp";
+	querytype: string = "sqlpp_query";
 
 	/**
 	 * data, cols will be injected to the table 
 	 */
 	data: any[];
+	allData: any[];
 	cols: any[];
 
-	// selected row (for row expansion function)
-	selectedRow: any;
+	// query result message
+	query_message: string;
+
+	/**
+	 * expansion status
+	 */
+	expansions: any[] = Array(25); // must be the same with the number of rows in a page
+	expanded: boolean = false;
+	firstFetched: boolean;
+
+	limit: number = 25; // maximum rows in one page
+	pages: number[] = []; // page numbers
+	isLoading: boolean = false;
 
 	constructor(
 		private globals: Globals,
@@ -97,64 +58,131 @@ export class QueryComponent implements OnInit {
 	 * TODO: pagination using limit, offset 
 	 * (it looks like hard to insert [limit offset] to the user typed query)
 	 */
-	showQueryResult(query: string): void {
+	getQueryResult(query: string): void {
 		this.data = undefined;
 		this.cols = [];
+		this.query_message = "";
 		
-		// aql mode
-		if (this.querytype == "aql"){
+		if (this.querytype == "aql_query"){
+			this.isLoading = true;
 			this.queryService
 				.getAQL(query)
 				.then(result => {
-					this.data = result;
-					const labels = Object.keys(result[0]);
-					for ( var i = 0; i < labels.length; i++ ) {
-						this.cols.push(
-							{ field: labels[i], header: labels[i] }
-						);
-					}
+					this.processQueryResult(result);
 				});
 		}
-		// sql ++ mode
-		else { 
+		else if (this.querytype == "sqlpp_query"){ 
+			this.isLoading = true;
 			this.queryService
 				.getSQLpp(query)
 				.then(result => {
-					this.data = result;
-					const labels = Object.keys(result[0]);
-					for ( var i = 0; i < labels.length; i++ ) {
-						this.cols.push(
-							{ field: labels[i], header: labels[i] }
-						);
-					}
+					this.processQueryResult(result);
+				});
+		}
+		else if (this.querytype == "aql_ddl"){ 
+			this.queryService
+				.sendDDL_AQL(query)
+				.then(result => {
+					this.query_message = result;
+				});
+		}
+		else if (this.querytype == "sqlpp_ddl"){ 
+			this.queryService
+				.sendDDL_SQL(query)
+				.then(result => {
+					this.query_message = result;
 				});
 		}
 	}
-
+	
 	/**
-	 * function used in row expansion
+	 * process query result
 	 */
-	showDataInRow(d: any[]) {
-		this.selectedRow = d;
+	processQueryResult(result: any): void{
+		if ("error-code" in result){
+			this.query_message = result["error-code"][1]
+			return;	
+		}
+		this.allData = result;
+
+		this.pages = [];
+		// generate page numbers
+		for (let i = 0 ; i < result.length / this.limit; i ++){
+			this.pages.push(i + 1);
+		}
+		
+		// make colums using first row
+		const labels = Object.keys(result[0]);
+		for ( var i = 0; i < labels.length; i++ ) {
+			this.cols.push(labels[i]);
+		}
+
+		this.getPageData(1);
+
+		this.isLoading = false;
 	}
 
 	/**
-	 *  function for expansion button
+	 * when click the page number, slice this.allData into this.data
 	 */
-	expandToggle(self){
-		const btns = document.getElementsByClassName('ui-row-toggler');
+	getPageData(pageNum: number){
+		this.data = []
+		const offset = this.limit * (pageNum - 1);
+		const limit = offset + this.limit;
+		this.data = this.allData.slice(offset, limit);
+	}
 
-		for (let btn of btns){
-			btn.click();	
+	/**
+	 * click cell
+	 * row : selected row index
+	 * col : selected col indexj
+	 */
+	expandCell(row:number, col:number, off: boolean):void{
+		if (off){
+			this.expansions[row] = null; 
+			return;
+		}
+		
+		const clickedData = this.data[row];
+		const clickedColumn = this.cols[col];
+
+		// if user clicked same cell
+		if (this.expansions[row] == clickedData[clickedColumn]) {
+			this.expansions[row] = null; 
+			return;
+		}
+
+		this.expansions[row] = clickedData[clickedColumn];
+	}
+
+	/**
+	 * expand all
+	 */
+	expandAll(col: string): void{
+		// if already expanded
+		if (this.expanded){
+			// make expansions array empty 	
+			for (let i = 0 ; i < this.data.length; i++){
+				this.expansions[i] = null;
+			}
+			this.expanded= false;
+			return;	
+		}
+
+		// expand all
+		this.expanded= true;
+		for (let i = 0 ; i < this.data.length; i++){
+			this.expansions[i] = this.data[i][col];
 		}
 	}
 
-	
+
+
 	/**
 	 * if click 'send query'
 	 */
 	onClick(){
-		this.showQueryResult(this.query.replace(/\n/g, " "));
+		this.getQueryResult(this.query.replace(/\n/g, " "));
 	}
 
 	ngOnInit(): void {

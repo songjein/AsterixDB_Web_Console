@@ -34,7 +34,7 @@ export class BrowseComponent implements OnInit, OnDestroy {
 	 * data fetch offset
 	 */
 	offset: number = 0;
-	limit: number = 25;
+	limit: number = 25; // maximum rows in one page
 	fetchPageNum: number = 10; // size of fetching data = limit * fetchPageNum
 	currentPageNum: number = 1;
 	pages: number[] = [];

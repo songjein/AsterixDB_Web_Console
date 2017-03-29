@@ -1,0 +1,81 @@
+<div style="width:95%; overflow-y:auto; padding: 10px; ">
+	<strong>mode : </strong>
+	<table id="query-option">
+		<tr>
+			<td>
+				<p-radioButton name="group1" value="sqlpp_query" label="SQL++" [(ngModel)]="querytype"></p-radioButton>
+			</td>
+			<td>
+				<p-radioButton name="group1" value="aql_query" label="AQL" [(ngModel)]="querytype"></p-radioButton>
+			</td>
+		</tr>
+			<td>
+				<p-radioButton name="group1" value="sqlpp_ddl" label="SQL++/DDL" [(ngModel)]="querytype"></p-radioButton>
+			</td>
+			<td>
+				<p-radioButton name="group1" value="aql_ddl" label="AQL/DDL" [(ngModel)]="querytype"></p-radioButton>
+			</td>
+	</table>
+
+	<div style="height:10px;"></div>
+
+	<codemirror [(ngModel)]="query"
+		[config]="config">
+	</codemirror>
+
+	<button id="sendQuery" (click)="onClick()">SendQuery</button>
+
+	<div style="clear:both;"></div>
+
+	<div id="query-message" *ngIf="query_message">
+		<b>Message: </b> {{ query_message }}
+	</div>
+
+	<div class="pagination">
+		<div class="page" *ngFor="let page of pages" (click)="getPageData(page)">{{page}}</div>
+		<div class="page-label" *ngIf="isLoading">
+			<i class="fa fa-spinner fa-pulse fa-1x fa-fw" aria-hidden="true"></i>
+		</div>
+	</div>
+
+	<div id="browse-container">
+		<table>
+			<tr>
+				<th *ngFor="let col of cols" (click)="expandAll(col)">
+					{{ col }}
+				</th>
+			</tr>
+			<tr *ngIf="data && data.length == 0">
+				<td colspan="100">Empty</td>
+			</tr>
+			<template ngFor let-d [ngForOf]="data" let-r="index" >
+				<tr class="row">
+					<td *ngFor="let k of cols; let c=index" (click)="expandCell(r,c)">
+						<!-- nested data-->
+						<span *ngIf="d[k] | isObject">
+							<b>Nested Data</b>
+						</span>
+						<!-- array of nested data-->
+						<span *ngIf="d[k] | isObjectArray">
+							[
+								<span *ngFor="let item of d[k]; let i = index">
+									<span *ngIf="i > 0">,</span>
+									<b>Nested Data</b>
+								</span>
+							]
+						</span>
+						<!-- plain data -->
+						<span *ngIf="!(d[k] | isObject) && !(d[k] | isObjectArray)">
+							{{ d[k] }}
+						</span>
+					</td>
+				</tr>
+				<tr *ngIf="expansions[r]"> 
+					<td [attr.colspan]="100" (click)="expandCell(r,c,true)">
+						<pre [innerHTML]=" expansions[r] | prettyjson:3"></pre>
+					</td>
+				</tr>
+			</template>
+		</table>
+	</div>
+</div>

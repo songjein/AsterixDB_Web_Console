@@ -37,6 +37,30 @@ export class QueryService {
 						.catch(this.handleError);
 	}
 
+	/**
+	 * send DDL query to the database (AQL)
+	 */
+	sendDDL_AQL(query: string): Promise<any> {
+		const apiUrl = '/ddl_aql?ddl='; 
+
+		return this.http.get(apiUrl + query)
+						.toPromise()
+						.then(response => response)
+						.catch(this.handleError);
+	}
+
+	/**
+	 * send DDL query to the database (SQL++)
+	 */
+	sendDDL_SQL(query: string): Promise<any> {
+		const apiUrl = '/ddl_sql?ddl='; 
+
+		return this.http.get(apiUrl + query)
+						.toPromise()
+						.then(response => response)
+						.catch(this.handleError);
+	}
+
 	private handleError(error: any): Promise<any> {
 		return Promise.reject(error.message || error);
 	}
