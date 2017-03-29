@@ -30,7 +30,8 @@
 </table>
 
 <div *ngFor="let ndata of nestedData; let i = index" >
-	<div *ngIf='selectedNestedDatatype == nestedDatatypesDatas[i]["DatatypeName"]'>
+	<!-- if selectedDatatype string contain nestedDatatypesDatas[i]["DatatypeName"] -->
+	<div *ngIf='selectedNestedDatatype.indexOf(nestedDatatypesDatas[i]["DatatypeName"]) != -1'>
 		<h3>{{selectedNestedDatatype}}</h3>
 		<table>
 			<tr>

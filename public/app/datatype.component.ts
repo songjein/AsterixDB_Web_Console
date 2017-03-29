@@ -83,7 +83,7 @@ export class DatatypeComponent implements OnInit, OnDestroy {
 	 * 
 	 * try to find a row that contains selected dataverse & dataset 
 	 * and get the datatypeName 
-	 * finally, store it as this.datatype
+	 * finally, store it in this.datatype
 	 */
 	getDatatypes(): void {
 		const dvName = this.globals.selectedDataverse;
@@ -121,24 +121,43 @@ export class DatatypeComponent implements OnInit, OnDestroy {
 		const dvName = this.globals.selectedDataverse;
 		const dsName = this.globals.selectedDataset;
 
-		for (let j = 0 ; j < this.nestedFieldTypeList.length; j++){
-			const nestedType = this.nestedFieldTypeList[j];
+		for (let i = 0 ; i < this.nestedFieldTypeList.length; i++){
+			const nestedType = this.nestedFieldTypeList[i];
 			
 			// find nested type's detail and update special case's FieldType 
-			for (let k = 0 ; k < this.MetadataDatatype.length; k ++){
-				const mtdt = this.MetadataDatatype[k];
+			for (let j = 0 ; j < this.MetadataDatatype.length; j++){
+				const mtdt = this.MetadataDatatype[j];
+
 				if (mtdt["DataverseName"] == dvName && mtdt["DatatypeName"] == nestedType["FieldType"]){
 					const tag = mtdt["Derived"]["Tag"];
 					let updatedValue = "";
+					let innerValue = "";
 					let specialCase = false;
 					
 					if (tag == "UNORDEREDLIST"){
 						updatedValue = `{{ ${mtdt["Derived"]["UnorderedList"]} }}`;		
+						innerValue = mtdt["Derived"]["UnorderedList"];
 						specialCase = true;
 					}
 					if (tag == "ORDEREDLIST"){
 						updatedValue = `[ ${mtdt["Derived"]["OrderedList"]} ]`;		
+						innerValue = mtdt["Derived"]["OrderedList"];
 						specialCase = true;
+					}
+
+					// If inner-item's datatype is not a primitive type ex) int64, string, datetime
+					// add it to nestedDatatypesDatas for making table of nested data 
+					// because that type can be another table (nested data type)
+					//
+					// * primitive type's dataverse => Metadata
+					// * non-primitive type's dataverse => something else 
+					//
+					for (let l = 0 ; l < this.MetadataDatatype.length; l++){
+						const _mtdt = this.MetadataDatatype[l];
+						if (_mtdt["DataverseName"] == dvName && _mtdt["DatatypeName"] == innerValue){
+							this.nestedDatatypesDatas.push(_mtdt);
+							break;
+						}
 					}
 
 					// update FieldType of this.data (table data)
@@ -150,8 +169,11 @@ export class DatatypeComponent implements OnInit, OnDestroy {
 						}
 					}
 				}
+				// if end
 			}
+			// for let j end
 		}
+		// for let i end
 	}	
 	
 	/**
@@ -195,7 +217,7 @@ export class DatatypeComponent implements OnInit, OnDestroy {
 	
 	/**
 	 * Now, we got the selected dataset's datatype's name
-	 * So, try to get its detail (Fields information)
+	 * So, will try to get its detail (Fields information)
 	 * 
 	 * query result contains
 	 * DataverseName, DatatypeName, "Derived": {"TAG", "isAnonymous", "Record":{"isOpen", "Fields"}}
@@ -246,16 +268,15 @@ export class DatatypeComponent implements OnInit, OnDestroy {
 
 						// find nested fieldType ("_FieldName" in FieldType)
 						for (let j = 0 ; j < this.data.length; j++){
-							// the nested type!
 							if (this.data[j]["FieldType"].includes("_" + this.data[j]["FieldName"])){
 								this.nestedFieldTypeList.push(this.data[j]);
 							}
 						}
 
-						// process special case , [], {{}}
+						// process special case ([ordered list], {{unordered list}}) using this.nestedFieldTypeList
 						this.processSpecialCase();
 						
-						// predict columns name using first row's columns
+						// make columns using the first row
 						const labels = Object.keys(record["Fields"][0]);
 						for (var j = 0 ; j < labels.length; j++){
 							this.cols.push(labels[j]);
@@ -267,7 +288,8 @@ export class DatatypeComponent implements OnInit, OnDestroy {
 	}
 	
 	/**
-	 *  send query and get datatype information 
+	 * send query and get datatype information 
+	 * getData() => getDatatypes() => processSpecialCase() => makeNestedDatatypeTable()
 	 */
 	getData(): void {
 		this.cols = [];
