@@ -89,6 +89,8 @@ export class BrowseComponent implements OnInit, OnDestroy {
 	fetchPageNum: number = 10; // size of fetching data = limit * fetchPageNum
 	currentPageNum: number = 1;
 	pages: number[] = [];
+	chunkNum: number = 1;
+	isLoading: boolean = false;
 
 	constructor(
 		private globals: Globals,
@@ -106,6 +108,8 @@ export class BrowseComponent implements OnInit, OnDestroy {
 
 		if (!dvName && !dsName) return;
 
+		this.isLoading = true;
+
 		this.queryService
 			.getAQL(
 				`
@@ -116,6 +120,7 @@ export class BrowseComponent implements OnInit, OnDestroy {
 				`
 			)
 			.then(result => {
+				this.allData = [];
 				this.allData = result;
 
 				// look up the number/2 of rows data and build columns
@@ -141,27 +146,43 @@ export class BrowseComponent implements OnInit, OnDestroy {
 				this.data = this.allData.slice(0, this.limit);
 				
 				// generate page number
+				this.pages = [];
 				for (let i = 0 ; i < this.fetchPageNum; i++){
-					this.pages.push(i + 1);
+					this.pages.push(i + 1 + ((this.chunkNum-1) * this.fetchPageNum));
 				}
 
 				// will be removed
 				if (!this.firstFetched) this.firstFetched = true;
+
+				this.isLoading = false;
 			});
 	}
 
 	/**
-	 * lazy load (get small chunk of data from database) 
+	 * when click the page number, slice this.allData into this.data
 	 */
-	loadData(event){
-		//this.browse(event.rows, event.first);
-	}
-
 	getPageData(pageNum: number){
 		this.data = []
+		pageNum = pageNum - ((this.chunkNum - 1) * this.fetchPageNum);
 		const offset = this.limit * (pageNum - 1);
 		const limit = offset + this.limit;
 		this.data = this.allData.slice(offset, limit);
+	}
+
+	/**
+	 * when click the next page button, get the next chunk from the database
+	 */
+	getNextChunk(){
+		this.browse(this.limit * this.chunkNum * this.fetchPageNum);
+		this.chunkNum ++;
+	}
+
+	/**
+	 * when click the prev page button, get the previous chunk from the database
+	 */
+	getPrevChunk(){
+		this.browse(this.limit * (this.chunkNum - 2) * this.fetchPageNum;
+		this.chunkNum --;
 	}
 
 	/**

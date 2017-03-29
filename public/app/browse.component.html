@@ -14,9 +14,11 @@
 	Please select dataset
 </h1>
 
-<div class="page-label">pages: </div>
+<div class="page-label" style="background:white">pages: </div>
+<div class="page-label" *ngIf="chunkNum > 1" (click)="getPrevChunk()">prev page</div>
 <div class="page" *ngFor="let page of pages" (click)="getPageData(page)">{{page}}</div>
-<div class="page-label">next page</div>
+<div class="page-label" (click)="getNextChunk()">next page</div>
+<div class="page-label" style="background:red; color:white;" *ngIf="isLoading">Loading...</div>
 <div style="height:10px; clear:both"></div>
 
 <div id="browse-container">
