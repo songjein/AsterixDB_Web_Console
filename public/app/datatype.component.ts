@@ -73,13 +73,16 @@ export class DatatypeComponent implements OnInit, OnDestroy {
 				this.MetadataDataset = result;
 
 				for ( var i = 0; i < result.length; i++ ) {
-					const tdvName = result[i]["DataverseName"];
-					const tdsName = result[i]["DatasetName"];
-					if ( tdvName == dvName && tdsName == dsName){
+					const _dvName = result[i]["DataverseName"];
+					const _dsName = result[i]["DatasetName"];
+					if ( _dvName == dvName && _dsName == dsName){
 						this.datatype = result[i]["DatatypeName"]
 						break;
 					}
 				}
+
+				// next, find datatype in metadata
+				this.getDatatypeDetail();
 			});
 	}
 	
@@ -141,9 +144,9 @@ export class DatatypeComponent implements OnInit, OnDestroy {
 			
 			// scan Metadata's Datatype
 			for ( var j = 0 ; j < this.MetadataDatatype.length; j++){
-				const tdvName = this.MetadataDatatype[j]["DataverseName"];
-				const tdtName = this.MetadataDatatype[j]["DatatypeName"];
-				if ( tdvName == dvName && tdtName == type ){
+				const _dvName = this.MetadataDatatype[j]["DataverseName"];
+				const _dtName = this.MetadataDatatype[j]["DatatypeName"];
+				if ( _dvName == dvName && _dtName == type ){
 					this.nestedDatatypesDatas.push(this.MetadataDatatype[j]);
 				}
 			}
@@ -208,10 +211,10 @@ export class DatatypeComponent implements OnInit, OnDestroy {
 
 				// making a table
 				for ( var i = 0; i < result.length; i++ ) {
-					const tdatatype = result[i]["DatatypeName"];
-					const tdataverse = result[i]["DataverseName"];
-					
-					if (tdataverse == dvName && tdatatype == this.datatype){
+					const _datatype = result[i]["DatatypeName"];
+					const _dataverse = result[i]["DataverseName"];
+							
+					if (_dataverse == dvName && _datatype == this.datatype){
 						const record = result[i]["Derived"]["Record"];
 
 						this.data = record["Fields"];
@@ -256,8 +259,6 @@ export class DatatypeComponent implements OnInit, OnDestroy {
 		// first, find datatype
 		this.getDatatypes();
 
-		// next, find datatype in metadata
-		this.getDatatypeDetail();
 	}
 
 	/**
