@@ -51,8 +51,10 @@ import { Globals } from './globals';
 			padding: 2px 3px;
 			margin: 0 3px;
 			cursor: pointer;
+			/*
 			background: orange;
 			border: 1px solid black;
+			*/
 		}
 
 		.page{
@@ -183,7 +185,7 @@ export class BrowseComponent implements OnInit, OnDestroy {
 	 * when click the prev page button, get the previous chunk from the database
 	 */
 	getPrevChunk(){
-		this.getChunk(this.limit * (this.chunkNum - 2) * this.fetchPageNum;
+		this.getChunk(this.limit * (this.chunkNum - 2) * this.fetchPageNum);
 		this.chunkNum --;
 	}
 

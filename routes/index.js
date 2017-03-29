@@ -16,7 +16,8 @@ router.get('/', function(req, res, next) {
 */
 router.get('/query_aql', (req, res, next) => {	
 	// this addr will be replaced with 'localhost'
-	var host = 'http://localhost:19002';
+	var host = 'http://sclab.gachon.ac.kr:19002';
+	//var host = 'http://localhost:19002';
 	var path = '/query?query=';
 	var query = req.query.query
 
@@ -30,7 +31,8 @@ router.get('/query_aql', (req, res, next) => {
 
 router.get('/query_sqlpp', (req, res, next) => {	
 	// this addr will be replaced with 'localhost'
-	var host = 'http://localhost:19002';
+	var host = '192.9.81.151:19002';
+	//var host = 'http://localhost:19002';
 	var path = '/query/sqlpp?query=';
 	var query = req.query.query
 
