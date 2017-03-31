@@ -61,23 +61,23 @@ export class BrowseComponent implements OnInit, OnDestroy {
 		this.isLoading = true;
 
 		this.queryService
-			.getAQL(
+			.sendQuery(
 				`
-					use dataverse ${dvName};
-					for $ds in dataset ${dsName} 
-					limit ${this.limit * this.fetchPageNum} offset ${offset} 
-					return $ds;
+					USE ${dvName};
+					SELECT VALUE ds FROM \`${dsName}\` ds
+					LIMIT ${this.limit * this.fetchPageNum} OFFSET ${offset} 
 				`
 			)
-			.then(result => {
+			.then(res => {
+				const records = JSON.parse(res).results;
 				this.allData = [];
-				this.allData = result;
+				this.allData = records;
 
 				// look up the number/2 of rows data and build columns
 				// make maximum length column 
 				if (!this.firstFetched){
-					for (let i = 0 ; i < result.length / 2; i++){
-						const keys = Object.keys(result[i]);	
+					for (let i = 0 ; i < records.length / 2; i++){
+						const keys = Object.keys(records[i]);	
 						for (let j = 0 ; j < keys.length; j++){
 							if (!this.cols.includes(keys[j])) this.cols.push(keys[j]);	
 						}

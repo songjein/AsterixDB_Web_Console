@@ -14,6 +14,32 @@ router.get('/', function(req, res, next) {
 * query proxy
 * for the CROS problem at javascript
 */
+
+var headers = {
+	'User-Agent':       'Super Agent/0.0.1',
+	'Content-Type':     'application/x-www-form-urlencoded'
+}
+
+router.post('/query-service', (req, res, next) => {	
+	var host = 'http://localhost:19002';
+	var path = '/query/service';
+	var statement = req.body.statement
+
+	var options = {
+		url: host + path,	
+		method: 'POST',
+		headers: headers,
+		form: {"statement": statement}
+	};
+
+	console.log("addr, params", options.url, options.form);
+
+	request(options, function(error, response, body){
+		console.log("result at router", body);
+		res.json(body);			
+	});
+});
+
 router.get('/query_aql', (req, res, next) => {	
 	var host = 'http://localhost:19002';
 	var path = '/query?query=';

@@ -35,12 +35,14 @@ export class SidebarComponent implements OnInit{
 	 */
 	getDataverse(): void {
 		this.queryService
-			.getAQL("for $ds in dataset Metadata.Dataverse return $ds;")
-			.then(result => {
-				for (var i = 0; i < result.length; i++){
+			.sendQuery("SELECT VALUE dv FROM Metadata.`Dataverse` dv")
+			.then(res => {
+				// parse response body
+				const dv = JSON.parse(res).results;
+				for (var i = 0; i < dv.length; i++){
 					this.items.push(
 						{ 
-							label: result[i]["DataverseName"], 
+							label: dv[i]["DataverseName"], 
 							icon: '', 
 							items: [],
 							command: (e) => {
@@ -61,11 +63,13 @@ export class SidebarComponent implements OnInit{
 	 */
 	getDataset(): void {
 		this.queryService
-			.getAQL("for $ds in dataset Metadata.Dataset return $ds;")
-			.then(result => {
-				for (var i = 0; i < result.length; i++){
-					const dvName = result[i]["DataverseName"];
-					const dsName = result[i]["DatasetName"];
+			.sendQuery("SELECT VALUE ds FROM Metadata.`Dataset` ds")
+			.then(res => {
+				// parse response body
+				const ds = JSON.parse(res).results;
+				for (var i = 0; i < ds.length; i++){
+					const dvName = ds[i]["DataverseName"];
+					const dsName = ds[i]["DatasetName"];
 
 					const idx = this.items.findIndex(x => x["label"] == dvName);
 

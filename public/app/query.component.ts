@@ -74,25 +74,26 @@ export class QueryComponent implements OnInit {
 		else if (this.querytype == "sqlpp_query"){ 
 			this.isLoading = true;
 			this.queryService
-				.getSQLpp(query)
-				.then(result => {
-					this.processQueryResult(result);
+				.sendQuery(query)
+				.then(res => {
+					this.processQueryResult(JSON.parse(res));
+					// metrics -> executionTime
 				});
 		}
 		else if (this.querytype == "aql_ddl"){ 
 			this.pages = [];
 			this.queryService
 				.sendDDL_AQL(query)
-				.then(result => {
-					this.query_message = result;
+				.then(res => {
+					this.query_message = JSON.parse(res);
 				});
 		}
 		else if (this.querytype == "sqlpp_ddl"){ 
 			this.pages = [];
 			this.queryService
-				.sendDDL_SQL(query)
-				.then(result => {
-					this.query_message = result;
+				.sendQuery(query)
+				.then(res => {
+					this.query_message = JSON.parse(res).status;
 				});
 		}
 	}
@@ -101,20 +102,21 @@ export class QueryComponent implements OnInit {
 	 * process query result
 	 */
 	processQueryResult(result: any): void{
-		if ("error-code" in result){
-			this.query_message = result["error-code"][1]
+		
+		if (result.status != "success"){
+			this.query_message = result.errors
 			return;	
 		}
-		this.allData = result;
+		this.allData = result.results;
 
 		this.pages = [];
 		// generate page numbers
-		for (let i = 0 ; i < result.length / this.limit; i ++){
+		for (let i = 0 ; i < this.allData.length / this.limit; i ++){
 			this.pages.push(i + 1);
 		}
 		
 		// make colums using first row
-		const labels = Object.keys(result[0]);
+		const labels = Object.keys(this.allData[0]);
 		for ( var i = 0; i < labels.length; i++ ) {
 			this.cols.push(labels[i]);
 		}

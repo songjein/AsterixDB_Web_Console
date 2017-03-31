@@ -64,19 +64,16 @@ export class DatatypeComponent implements OnInit, OnDestroy {
 		const dsName = this.globals.selectedDataset;
 
 		this.queryService
-			.getAQL(
-				`
-					for $ds in dataset Metadata.Dataset return $ds;
-				`
-			)
-			.then(result => {
-				this.MetadataDataset = result;
+			.sendQuery("SELECT VALUE ds FROM Metadata.`Dataset` ds")
+			.then(res => {
+				const results = JSON.parse(res).results;
+				this.MetadataDataset = results;
 
-				for ( var i = 0; i < result.length; i++ ) {
-					const _dvName = result[i]["DataverseName"];
-					const _dsName = result[i]["DatasetName"];
+				for ( var i = 0; i < results.length; i++ ) {
+					const _dvName = results[i]["DataverseName"];
+					const _dsName = results[i]["DatasetName"];
 					if ( _dvName == dvName && _dsName == dsName){
-						this.datatype = result[i]["DatatypeName"]
+						this.datatype = results[i]["DatatypeName"]
 						break;
 					}
 				}
@@ -216,26 +213,22 @@ export class DatatypeComponent implements OnInit, OnDestroy {
 	 *
 	 */
 	getDatatypeDetail(): void {
-
 		const dvName = this.globals.selectedDataverse;
 		const dsName = this.globals.selectedDataset;
 
 		this.queryService
-			.getAQL(
-				`
-					for $ds in dataset Metadata.Datatype return $ds;
-				`
-			)
-			.then(result => {
-				this.MetadataDatatype = result;
+			.sendQuery("SELECT VALUE dt FROM Metadata.`Datatype` dt")
+			.then(res => {
+				const results = JSON.parse(res).results;
+				this.MetadataDatatype = results;
 
 				// making a table
-				for ( var i = 0; i < result.length; i++ ) {
-					const _datatype = result[i]["DatatypeName"];
-					const _dataverse = result[i]["DataverseName"];
+				for ( var i = 0; i < results.length; i++ ) {
+					const _datatype = results[i]["DatatypeName"];
+					const _dataverse = results[i]["DataverseName"];
 							
 					if (_dataverse == dvName && _datatype == this.datatype){
-						const record = result[i]["Derived"]["Record"];
+						const record = results[i]["Derived"]["Record"];
 
 						this.data = record["Fields"];
 						this.isOpen = record["IsOpen"];
