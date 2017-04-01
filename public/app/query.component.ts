@@ -33,6 +33,7 @@ export class QueryComponent implements OnInit {
 
 	// query result message
 	query_message: string;
+	execution_time: number;
 
 	/**
 	 * expansion status
@@ -63,6 +64,10 @@ export class QueryComponent implements OnInit {
 		this.cols = [];
 		this.query_message = "";
 		
+		/**
+		 * AQL query, ddl is not working at 0.9.1 version 
+		 * "/query?query="
+		 */
 		if (this.querytype == "aql_query"){
 			this.isLoading = true;
 			this.queryService
@@ -77,7 +82,7 @@ export class QueryComponent implements OnInit {
 				.sendQuery(query)
 				.then(res => {
 					this.processQueryResult(JSON.parse(res));
-					// metrics -> executionTime
+					this.execution_time = JSON.parse(res).metrics.executionTime;
 				});
 		}
 		else if (this.querytype == "aql_ddl"){ 
@@ -179,8 +184,6 @@ export class QueryComponent implements OnInit {
 			this.expansions[i] = this.data[i][col];
 		}
 	}
-
-
 
 	/**
 	 * if click 'send query'

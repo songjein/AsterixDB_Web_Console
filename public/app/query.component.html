@@ -27,6 +27,12 @@
 
 	<div style="clear:both;"></div>
 
+	<div *ngIf="execution_time">
+		executionTime : <span id="execution-time">{{ execution_time }}</span>
+	</div>
+
+	<div style="height:10px;"></div>
+
 	<div id="query-message" *ngIf="query_message">
 		<b>Message: </b> {{ query_message }}
 	</div>

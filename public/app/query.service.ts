@@ -32,23 +32,14 @@ export class QueryService {
 	 * send AQL query to the database
 	 */
 	getAQL(query: string): Promise<any> {
-		const apiUrl = '/query/aql?query='; 
+		const apiUrl = '/query-aql?query='; 
 
 		return this.http.get(apiUrl + query)
 						.toPromise()
-						.then(response => response.json() )
-						.catch(this.handleError);
-	}
+						.then(response => {
+							console.log("response aql", response);	
+							return response.json() })
 
-	/**
-	 * send SQLpp query to the database
-	 */
-	getSQLpp(query: string): Promise<any> {
-		const apiUrl = '/query/sqlpp?query='; 
-
-		return this.http.get(apiUrl + query)
-						.toPromise()
-						.then(response => response.json() )
 						.catch(this.handleError);
 	}
 
@@ -56,19 +47,7 @@ export class QueryService {
 	 * send DDL query to the database (AQL)
 	 */
 	sendDDL_AQL(query: string): Promise<any> {
-		const apiUrl = '/ddl/aql?ddl='; 
-
-		return this.http.get(apiUrl + query)
-						.toPromise()
-						.then(response => response)
-						.catch(this.handleError);
-	}
-
-	/**
-	 * send DDL query to the database (SQL++)
-	 */
-	sendDDL_SQL(query: string): Promise<any> {
-		const apiUrl = '/ddl/sql?ddl='; 
+		const apiUrl = '/ddl-aql?ddl='; 
 
 		return this.http.get(apiUrl + query)
 						.toPromise()
